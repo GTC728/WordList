@@ -1,0 +1,59 @@
+{
+  "id": "awl",
+  "title": "Academic Word List",
+  "titleZh": "學術字彙表",
+  "headwordCount": 570,
+  "attribution": "Averil Coxhead, Victoria University of Wellington",
+  "sublists": [
+    {
+      "n": 1,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 2,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 3,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 4,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 5,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 6,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 7,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 8,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 9,
+      "wordCount": 60,
+      "lessonCount": 6
+    },
+    {
+      "n": 10,
+      "wordCount": 30,
+      "lessonCount": 3
+    }
+  ]
+}

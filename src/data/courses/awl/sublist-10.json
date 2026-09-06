@@ -1,0 +1,885 @@
+[
+  {
+    "id": "adjacent",
+    "headword": "adjacent",
+    "sublist": 10,
+    "glossZh": "毗鄰的",
+    "glossEn": "next to something; neighbouring",
+    "family": [
+      {
+        "form": "adjacent",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The adjacent room is reserved for interviews.",
+      "blank": "adjacent"
+    },
+    "collocations": [
+      {
+        "left": "adjacent",
+        "right": "to"
+      }
+    ]
+  },
+  {
+    "id": "albeit",
+    "headword": "albeit",
+    "sublist": 10,
+    "glossZh": "雖然",
+    "glossEn": "although; even if only to a limited extent",
+    "family": [
+      {
+        "form": "albeit",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "The sample is large, albeit drawn from a single city.",
+      "blank": "albeit"
+    },
+    "collocations": []
+  },
+  {
+    "id": "assemble",
+    "headword": "assemble",
+    "sublist": 10,
+    "glossZh": "組裝；集合",
+    "glossEn": "bring parts or people together",
+    "family": [
+      {
+        "form": "assemble",
+        "role": "動詞"
+      },
+      {
+        "form": "assembly",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The team will assemble the kit the night before fieldwork.",
+      "blank": "assemble"
+    },
+    "collocations": [
+      {
+        "left": "assemble",
+        "right": "evidence"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A public {blank} is scheduled in the hall.",
+      "blank": "assembly",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "collapse",
+    "headword": "collapse",
+    "sublist": 10,
+    "glossZh": "崩潰",
+    "glossEn": "fall down or fail suddenly",
+    "family": [
+      {
+        "form": "collapse",
+        "role": "動詞"
+      },
+      {
+        "form": "collapsible",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The coalition may collapse if the amendment fails.",
+      "blank": "collapse"
+    },
+    "collocations": [
+      {
+        "left": "collapse",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A sudden {blank} in returns is plotted in Figure 2.",
+      "blank": "collapse",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "colleague",
+    "headword": "colleague",
+    "sublist": 10,
+    "glossZh": "同事",
+    "glossEn": "a person one works with in the same organisation",
+    "family": [
+      {
+        "form": "colleague",
+        "role": "名詞"
+      },
+      {
+        "form": "colleagues",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Please copy a colleague on every ethics query.",
+      "blank": "colleague"
+    },
+    "collocations": [
+      {
+        "left": "close",
+        "right": "colleague"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} independently coded the files.",
+      "blank": "colleagues",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "compile",
+    "headword": "compile",
+    "sublist": 10,
+    "glossZh": "彙編",
+    "glossEn": "gather materials and put them into one work",
+    "family": [
+      {
+        "form": "compile",
+        "role": "動詞"
+      },
+      {
+        "form": "compilation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "We compile a list of every dataset cited in the volume.",
+      "blank": "compile"
+    },
+    "collocations": [
+      {
+        "left": "compile",
+        "right": "a list"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A {blank} of the circulars is posted online.",
+      "blank": "compilation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "conceive",
+    "headword": "conceive",
+    "sublist": 10,
+    "glossZh": "構想",
+    "glossEn": "form an idea of something in the mind",
+    "family": [
+      {
+        "form": "conceive",
+        "role": "形容詞"
+      },
+      {
+        "form": "conceivably",
+        "role": "副詞"
+      },
+      {
+        "form": "conceivable",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The authors conceive of the archive as a public good.",
+      "blank": "conceive"
+    },
+    "collocations": [
+      {
+        "left": "conceive",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A {blank} alternative is sketched in the conclusion.",
+      "blank": "conceivable",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "convince",
+    "headword": "convince",
+    "sublist": 10,
+    "glossZh": "說服",
+    "glossEn": "cause someone to believe that something is true",
+    "family": [
+      {
+        "form": "convince",
+        "role": "動詞"
+      },
+      {
+        "form": "convincingly",
+        "role": "副詞"
+      },
+      {
+        "form": "convincing",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "The residuals convince us that a second term is needed.",
+      "blank": "convince"
+    },
+    "collocations": [
+      {
+        "left": "convince",
+        "right": "the reader"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A {blank} account of the gap is still missing.",
+      "blank": "convincing",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "depress",
+    "headword": "depress",
+    "sublist": 10,
+    "glossZh": "壓抑；使蕭條",
+    "glossEn": "push something down in level or mood",
+    "family": [
+      {
+        "form": "depress",
+        "role": "動詞"
+      },
+      {
+        "form": "depression",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "High fees depress applications from the poorest decile.",
+      "blank": "depress"
+    },
+    "collocations": [
+      {
+        "left": "depress",
+        "right": "demand"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A regional {blank} in hiring is noted in section 4.",
+      "blank": "depression",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "encounter",
+    "headword": "encounter",
+    "sublist": 10,
+    "glossZh": "遭遇",
+    "glossEn": "meet something, often unexpectedly or as a difficulty",
+    "family": [
+      {
+        "form": "encounter",
+        "role": "動詞"
+      },
+      {
+        "form": "encounters",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Coders encounter the same edge case in every tenth file.",
+      "blank": "encounter"
+    },
+    "collocations": [
+      {
+        "left": "encounter",
+        "right": "problems"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "An early {blank} with the archive shaped the design.",
+      "blank": "encounter",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "enormous",
+    "headword": "enormous",
+    "sublist": 10,
+    "glossZh": "巨大的",
+    "glossEn": "extremely large",
+    "family": [
+      {
+        "form": "enormous",
+        "role": "形容詞"
+      },
+      {
+        "form": "enormously",
+        "role": "副詞"
+      },
+      {
+        "form": "enormity",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "An enormous volume of email attachments exceeded the cap.",
+      "blank": "enormous"
+    },
+    "collocations": [
+      {
+        "left": "enormous",
+        "right": "impact"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Costs rose {blank} after the currency shift.",
+      "blank": "enormously",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "forthcoming",
+    "headword": "forthcoming",
+    "sublist": 10,
+    "glossZh": "即將到來的；樂於提供的",
+    "glossEn": "about to happen, or willing to give information",
+    "family": [
+      {
+        "form": "forthcoming",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "A forthcoming erratum will correct the date in Table 2.",
+      "blank": "forthcoming"
+    },
+    "collocations": [
+      {
+        "left": "forthcoming",
+        "right": "book"
+      }
+    ]
+  },
+  {
+    "id": "incline",
+    "headword": "incline",
+    "sublist": 10,
+    "glossZh": "傾向",
+    "glossEn": "lean toward a view or a physical angle",
+    "family": [
+      {
+        "form": "incline",
+        "role": "動詞"
+      },
+      {
+        "form": "inclination",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The board may incline toward a shorter instrument.",
+      "blank": "incline"
+    },
+    "collocations": [
+      {
+        "left": "incline",
+        "right": "to"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "That {blank} is stated in the minutes.",
+      "blank": "inclination",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "integrity",
+    "headword": "integrity",
+    "sublist": 10,
+    "glossZh": "誠信；完整",
+    "glossEn": "honesty of practice, or the state of being whole",
+    "family": [
+      {
+        "form": "integrity",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Data integrity is checked after every merge.",
+      "blank": "integrity"
+    },
+    "collocations": [
+      {
+        "left": "academic",
+        "right": "integrity"
+      },
+      {
+        "left": "integrity",
+        "right": "of"
+      }
+    ]
+  },
+  {
+    "id": "intrinsic",
+    "headword": "intrinsic",
+    "sublist": 10,
+    "glossZh": "內在的",
+    "glossEn": "belonging to something as an essential part",
+    "family": [
+      {
+        "form": "intrinsic",
+        "role": "形容詞"
+      },
+      {
+        "form": "intrinsically",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "Curiosity is treated as an intrinsic motive in the model.",
+      "blank": "intrinsic"
+    },
+    "collocations": [
+      {
+        "left": "intrinsic",
+        "right": "value"
+      },
+      {
+        "left": "intrinsic",
+        "right": "motivation"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The task is {blank} interesting to most of the cohort.",
+      "blank": "intrinsically",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "invoke",
+    "headword": "invoke",
+    "sublist": 10,
+    "glossZh": "援引",
+    "glossEn": "appeal to a law, idea, or authority in support of a claim",
+    "family": [
+      {
+        "form": "invoke",
+        "role": "動詞"
+      },
+      {
+        "form": "invoked",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "The authors invoke a 1972 circular as precedent.",
+      "blank": "invoke"
+    },
+    "collocations": [
+      {
+        "left": "invoke",
+        "right": "a principle"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The same statute was {blank} in the later case.",
+      "blank": "invoked",
+      "role": "動詞"
+    }
+  },
+  {
+    "id": "levy",
+    "headword": "levy",
+    "sublist": 10,
+    "glossZh": "課徵",
+    "glossEn": "impose and collect a tax or charge, or the charge itself",
+    "family": [
+      {
+        "form": "levy",
+        "role": "名詞"
+      },
+      {
+        "form": "levies",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The council may levy a small fee on late renewals.",
+      "blank": "levy"
+    },
+    "collocations": [
+      {
+        "left": "levy",
+        "right": "a tax"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two extra {blank} appear on the invoice.",
+      "blank": "levies",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "likewise",
+    "headword": "likewise",
+    "sublist": 10,
+    "glossZh": "同樣地",
+    "glossEn": "in the same way",
+    "family": [
+      {
+        "form": "likewise",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "Site A used a shorter form; site B did likewise.",
+      "blank": "likewise"
+    },
+    "collocations": []
+  },
+  {
+    "id": "nonetheless",
+    "headword": "nonetheless",
+    "sublist": 10,
+    "glossZh": "儘管如此",
+    "glossEn": "in spite of that",
+    "family": [
+      {
+        "form": "nonetheless",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "The sample is small; nonetheless the pattern is stable.",
+      "blank": "nonetheless"
+    },
+    "collocations": []
+  },
+  {
+    "id": "notwithstanding",
+    "headword": "notwithstanding",
+    "sublist": 10,
+    "glossZh": "儘管",
+    "glossEn": "in spite of a stated fact",
+    "family": [
+      {
+        "form": "notwithstanding",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "The file is incomplete; the estimate is reported notwithstanding.",
+      "blank": "notwithstanding"
+    },
+    "collocations": []
+  },
+  {
+    "id": "odd",
+    "headword": "odd",
+    "sublist": 10,
+    "glossZh": "奇特的；單數的",
+    "glossEn": "strange, or not divisible by two",
+    "family": [
+      {
+        "form": "odd",
+        "role": "形容詞"
+      },
+      {
+        "form": "odds",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "An odd gap remains between the two official counts.",
+      "blank": "odd"
+    },
+    "collocations": [
+      {
+        "left": "odd",
+        "right": "case"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The {blank} of completion are listed by faculty.",
+      "blank": "odds",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "ongoing",
+    "headword": "ongoing",
+    "sublist": 10,
+    "glossZh": "持續進行的",
+    "glossEn": "continuing and not yet finished",
+    "family": [
+      {
+        "form": "ongoing",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "An ongoing audit of the archive is due in June.",
+      "blank": "ongoing"
+    },
+    "collocations": [
+      {
+        "left": "ongoing",
+        "right": "debate"
+      },
+      {
+        "left": "ongoing",
+        "right": "research"
+      }
+    ]
+  },
+  {
+    "id": "panel",
+    "headword": "panel",
+    "sublist": 10,
+    "glossZh": "小組；面板",
+    "glossEn": "a group of people assembled to judge or discuss",
+    "family": [
+      {
+        "form": "panel",
+        "role": "名詞"
+      },
+      {
+        "form": "panelled",
+        "role": "名詞"
+      },
+      {
+        "form": "panels",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "An external panel will read every dissertation.",
+      "blank": "panel"
+    },
+    "collocations": [
+      {
+        "left": "expert",
+        "right": "panel"
+      },
+      {
+        "left": "panel",
+        "right": "discussion"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} ran in parallel on Friday.",
+      "blank": "panels",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "persist",
+    "headword": "persist",
+    "sublist": 10,
+    "glossZh": "持續",
+    "glossEn": "continue despite difficulty or opposition",
+    "family": [
+      {
+        "form": "persist",
+        "role": "動詞"
+      },
+      {
+        "form": "persistently",
+        "role": "副詞"
+      },
+      {
+        "form": "persistence",
+        "role": "名詞"
+      },
+      {
+        "form": "persistent",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "Late submissions persist after the reminder campaign.",
+      "blank": "persist"
+    },
+    "collocations": [
+      {
+        "left": "persist",
+        "right": "in"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "{blank} of the error after cleaning is noted below.",
+      "blank": "Persistence",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "pose",
+    "headword": "pose",
+    "sublist": 10,
+    "glossZh": "構成；提出",
+    "glossEn": "present a problem, question, or risk",
+    "family": [
+      {
+        "form": "pose",
+        "role": "動詞"
+      },
+      {
+        "form": "posed",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "Missing dates pose a threat to the timeline.",
+      "blank": "pose"
+    },
+    "collocations": [
+      {
+        "left": "pose",
+        "right": "a challenge"
+      },
+      {
+        "left": "pose",
+        "right": "a question"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The same dilemma was {blank} in the 1998 review.",
+      "blank": "posed",
+      "role": "動詞"
+    }
+  },
+  {
+    "id": "reluctance",
+    "headword": "reluctance",
+    "sublist": 10,
+    "glossZh": "不情願",
+    "glossEn": "unwillingness to do something",
+    "family": [
+      {
+        "form": "reluctance",
+        "role": "名詞"
+      },
+      {
+        "form": "reluctantly",
+        "role": "副詞"
+      },
+      {
+        "form": "reluctant",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "Staff reluctance to share raw files is discussed in section 5.",
+      "blank": "reluctance"
+    },
+    "collocations": [
+      {
+        "left": "reluctance",
+        "right": "to"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A {blank} minority declined the follow-up.",
+      "blank": "reluctant",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "so-called",
+    "headword": "so-called",
+    "sublist": 10,
+    "glossZh": "所謂的",
+    "glossEn": "used to name something in a doubtful or conventional way",
+    "family": [
+      {
+        "form": "so-called",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The so-called shortcut produced duplicate identifiers.",
+      "blank": "so-called"
+    },
+    "collocations": []
+  },
+  {
+    "id": "straightforward",
+    "headword": "straightforward",
+    "sublist": 10,
+    "glossZh": "直截的",
+    "glossEn": "easy to understand or simple to carry out",
+    "family": [
+      {
+        "form": "straightforward",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The deposit steps are straightforward once the checklist is followed.",
+      "blank": "straightforward"
+    },
+    "collocations": [
+      {
+        "left": "straightforward",
+        "right": "task"
+      }
+    ]
+  },
+  {
+    "id": "undergo",
+    "headword": "undergo",
+    "sublist": 10,
+    "glossZh": "經歷",
+    "glossEn": "experience a process, often one that is demanding",
+    "family": [
+      {
+        "form": "undergo",
+        "role": "動詞"
+      },
+      {
+        "form": "underwent",
+        "role": "形容詞"
+      },
+      {
+        "form": "undergone",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Every file must undergo a second identifier check.",
+      "blank": "undergo"
+    },
+    "collocations": [
+      {
+        "left": "undergo",
+        "right": "change"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The building has {blank} two refits since 2010.",
+      "blank": "undergone",
+      "role": "動詞"
+    }
+  },
+  {
+    "id": "whereby",
+    "headword": "whereby",
+    "sublist": 10,
+    "glossZh": "藉以",
+    "glossEn": "by which means; according to which",
+    "family": [
+      {
+        "form": "whereby",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "A protocol was agreed whereby each site uses the same script.",
+      "blank": "whereby"
+    },
+    "collocations": []
+  }
+]

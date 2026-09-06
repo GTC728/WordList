@@ -1,0 +1,2079 @@
+[
+  {
+    "id": "abstract",
+    "headword": "abstract",
+    "sublist": 6,
+    "glossZh": "摘要；抽象的",
+    "glossEn": "a short overview of a paper, or existing as an idea",
+    "family": [
+      {
+        "form": "abstract",
+        "role": "形容詞"
+      },
+      {
+        "form": "abstractly",
+        "role": "副詞"
+      },
+      {
+        "form": "abstraction",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The abstract must state the main finding in one sentence.",
+      "blank": "abstract"
+    },
+    "collocations": [
+      {
+        "left": "write",
+        "right": "an abstract"
+      },
+      {
+        "left": "abstract",
+        "right": "concept"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "An {blank} of the argument is given first.",
+      "blank": "abstraction",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "accurate",
+    "headword": "accurate",
+    "sublist": 6,
+    "glossZh": "準確的",
+    "glossEn": "correct in the details that matter",
+    "family": [
+      {
+        "form": "accurate",
+        "role": "形容詞"
+      },
+      {
+        "form": "accurately",
+        "role": "副詞"
+      },
+      {
+        "form": "accuracy",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Provide an accurate count of missing cases.",
+      "blank": "accurate"
+    },
+    "collocations": [
+      {
+        "left": "accurate",
+        "right": "information"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Dates were {blank} recorded in ISO format.",
+      "blank": "accurately",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "acknowledge",
+    "headword": "acknowledge",
+    "sublist": 6,
+    "glossZh": "承認；致謝",
+    "glossEn": "admit that something is true, or thank someone",
+    "family": [
+      {
+        "form": "acknowledge",
+        "role": "動詞"
+      },
+      {
+        "form": "acknowledgement",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Authors must acknowledge the archive that supplied the files.",
+      "blank": "acknowledge"
+    },
+    "collocations": [
+      {
+        "left": "acknowledge",
+        "right": "limitations"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "An {blank} page lists every funder.",
+      "blank": "acknowledgement",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "aggregate",
+    "headword": "aggregate",
+    "sublist": 6,
+    "glossZh": "合計",
+    "glossEn": "combine into a total, or the total itself",
+    "family": [
+      {
+        "form": "aggregate",
+        "role": "動詞"
+      },
+      {
+        "form": "aggregation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Do not aggregate the site scores before checking spread.",
+      "blank": "aggregate"
+    },
+    "collocations": [
+      {
+        "left": "aggregate",
+        "right": "data"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The {blank} figure hides a rural decline.",
+      "blank": "aggregation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "allocate",
+    "headword": "allocate",
+    "sublist": 6,
+    "glossZh": "配置",
+    "glossEn": "assign a resource to a purpose or person",
+    "family": [
+      {
+        "form": "allocate",
+        "role": "動詞"
+      },
+      {
+        "form": "allocation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The board will allocate extra hours to marking.",
+      "blank": "allocate"
+    },
+    "collocations": [
+      {
+        "left": "allocate",
+        "right": "resources"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Fair {blank} of lab time is set out in the rota.",
+      "blank": "allocation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "assign",
+    "headword": "assign",
+    "sublist": 6,
+    "glossZh": "指派",
+    "glossEn": "give a task, role, or value to someone or something",
+    "family": [
+      {
+        "form": "assign",
+        "role": "動詞"
+      },
+      {
+        "form": "assignment",
+        "role": "名詞"
+      },
+      {
+        "form": "reassign",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Tutors assign each student a unique case number.",
+      "blank": "assign"
+    },
+    "collocations": [
+      {
+        "left": "assign",
+        "right": "a task"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The first {blank} is due in week four.",
+      "blank": "assignment",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "attach",
+    "headword": "attach",
+    "sublist": 6,
+    "glossZh": "附加",
+    "glossEn": "join one thing to another",
+    "family": [
+      {
+        "form": "attach",
+        "role": "動詞"
+      },
+      {
+        "form": "attachment",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Please attach the consent form to the deposit.",
+      "blank": "attach"
+    },
+    "collocations": [
+      {
+        "left": "attach",
+        "right": "to"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "An {blank} lists the extra tables.",
+      "blank": "attachment",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "author",
+    "headword": "author",
+    "sublist": 6,
+    "glossZh": "作者",
+    "glossEn": "the writer of a text",
+    "family": [
+      {
+        "form": "author",
+        "role": "動詞"
+      },
+      {
+        "form": "authorship",
+        "role": "名詞"
+      },
+      {
+        "form": "authors",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The corresponding author handles all queries.",
+      "blank": "author"
+    },
+    "collocations": [
+      {
+        "left": "lead",
+        "right": "author"
+      },
+      {
+        "left": "author",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Joint {blank} is common in this lab.",
+      "blank": "authorship",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "bond",
+    "headword": "bond",
+    "sublist": 6,
+    "glossZh": "連結；債券",
+    "glossEn": "a close tie, or a formal debt instrument",
+    "family": [
+      {
+        "form": "bond",
+        "role": "動詞"
+      },
+      {
+        "form": "bonded",
+        "role": "動詞"
+      },
+      {
+        "form": "bonds",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "Trust can bond a team more tightly than a contract.",
+      "blank": "bond"
+    },
+    "collocations": [
+      {
+        "left": "social",
+        "right": "bond"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Family {blank} are discussed in chapter 5.",
+      "blank": "bonds",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "brief",
+    "headword": "brief",
+    "sublist": 6,
+    "glossZh": "簡短的；簡報",
+    "glossEn": "short in length, or a short set of instructions",
+    "family": [
+      {
+        "form": "brief",
+        "role": "形容詞"
+      },
+      {
+        "form": "briefly",
+        "role": "副詞"
+      },
+      {
+        "form": "brevity",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Keep the methods note as brief as the journal allows.",
+      "blank": "brief"
+    },
+    "collocations": [
+      {
+        "left": "brief",
+        "right": "overview"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The chair spoke {blank} and then opened the floor.",
+      "blank": "briefly",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "capable",
+    "headword": "capable",
+    "sublist": 6,
+    "glossZh": "有能力的",
+    "glossEn": "having the skill or power to do something",
+    "family": [
+      {
+        "form": "capable",
+        "role": "形容詞"
+      },
+      {
+        "form": "capability",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The software is capable of batch renaming.",
+      "blank": "capable"
+    },
+    "collocations": [
+      {
+        "left": "capable",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Spare {blank} was built into the server plan.",
+      "blank": "capability",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "cite",
+    "headword": "cite",
+    "sublist": 6,
+    "glossZh": "引用",
+    "glossEn": "name a source in support of a claim",
+    "family": [
+      {
+        "form": "cite",
+        "role": "動詞"
+      },
+      {
+        "form": "citation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Always cite the edition you actually used.",
+      "blank": "cite"
+    },
+    "collocations": [
+      {
+        "left": "cite",
+        "right": "sources"
+      },
+      {
+        "left": "widely",
+        "right": "cited"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A missing {blank} delayed the proofs.",
+      "blank": "citation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "cooperate",
+    "headword": "cooperate",
+    "sublist": 6,
+    "glossZh": "合作",
+    "glossEn": "work together toward a shared goal",
+    "family": [
+      {
+        "form": "cooperate",
+        "role": "動詞"
+      },
+      {
+        "form": "co-operatively",
+        "role": "副詞"
+      },
+      {
+        "form": "co-operative",
+        "role": "形容詞"
+      },
+      {
+        "form": "cooperation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The two labs cooperate on the shared codebook.",
+      "blank": "cooperate"
+    },
+    "collocations": [
+      {
+        "left": "cooperate",
+        "right": "with"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Cross-faculty {blank} is still rare.",
+      "blank": "cooperation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "discriminate",
+    "headword": "discriminate",
+    "sublist": 6,
+    "glossZh": "區辨；歧視",
+    "glossEn": "tell things apart, or treat a group unfairly",
+    "family": [
+      {
+        "form": "discriminate",
+        "role": "動詞"
+      },
+      {
+        "form": "discrimination",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The test cannot discriminate between the two dialects.",
+      "blank": "discriminate"
+    },
+    "collocations": [
+      {
+        "left": "discriminate",
+        "right": "between"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Age {blank} is barred by the statute.",
+      "blank": "discrimination",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "display",
+    "headword": "display",
+    "sublist": 6,
+    "glossZh": "展示",
+    "glossEn": "show something so that it can be seen",
+    "family": [
+      {
+        "form": "display",
+        "role": "動詞"
+      },
+      {
+        "form": "displayed",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "Figure 4 displays the raw and adjusted means.",
+      "blank": "displays"
+    },
+    "collocations": [
+      {
+        "left": "display",
+        "right": "data"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A public {blank} of the posters runs all week.",
+      "blank": "display",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "diverse",
+    "headword": "diverse",
+    "sublist": 6,
+    "glossZh": "多元的",
+    "glossEn": "showing a wide range of types",
+    "family": [
+      {
+        "form": "diverse",
+        "role": "形容詞"
+      },
+      {
+        "form": "diversely",
+        "role": "副詞"
+      },
+      {
+        "form": "diversification",
+        "role": "名詞"
+      },
+      {
+        "form": "diversity",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "A diverse sample was drawn from five faculties.",
+      "blank": "diverse"
+    },
+    "collocations": [
+      {
+        "left": "diverse",
+        "right": "range"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Linguistic {blank} is mapped in chapter 3.",
+      "blank": "diversity",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "domain",
+    "headword": "domain",
+    "sublist": 6,
+    "glossZh": "領域",
+    "glossEn": "an area of knowledge, activity, or control",
+    "family": [
+      {
+        "form": "domain",
+        "role": "名詞"
+      },
+      {
+        "form": "domains",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The claim is limited to the domain of written exams.",
+      "blank": "domain"
+    },
+    "collocations": [
+      {
+        "left": "public",
+        "right": "domain"
+      },
+      {
+        "left": "domain",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two neighbouring {blank} are compared.",
+      "blank": "domains",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "edit",
+    "headword": "edit",
+    "sublist": 6,
+    "glossZh": "編輯",
+    "glossEn": "prepare a text by correcting or shortening it",
+    "family": [
+      {
+        "form": "edit",
+        "role": "動詞"
+      },
+      {
+        "form": "edition",
+        "role": "名詞"
+      },
+      {
+        "form": "editorial",
+        "role": "形容詞"
+      },
+      {
+        "form": "editor",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Two interns edit the transcripts for clarity.",
+      "blank": "edit"
+    },
+    "collocations": [
+      {
+        "left": "edit",
+        "right": "a manuscript"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A second {blank} appeared in 2020.",
+      "blank": "edition",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "enhance",
+    "headword": "enhance",
+    "sublist": 6,
+    "glossZh": "提升",
+    "glossEn": "improve the quality or strength of something",
+    "family": [
+      {
+        "form": "enhance",
+        "role": "名詞"
+      },
+      {
+        "form": "enhancement",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Captions enhance recall of the key figures.",
+      "blank": "enhance"
+    },
+    "collocations": [
+      {
+        "left": "enhance",
+        "right": "performance"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A modest {blank} in clarity was noted.",
+      "blank": "enhancement",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "estate",
+    "headword": "estate",
+    "sublist": 6,
+    "glossZh": "地產；遺產",
+    "glossEn": "land and buildings, or a person's property after death",
+    "family": [
+      {
+        "form": "estate",
+        "role": "名詞"
+      },
+      {
+        "form": "estates",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The university estate includes three off-campus halls.",
+      "blank": "estate"
+    },
+    "collocations": [
+      {
+        "left": "real",
+        "right": "estate"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} were sold to fund the lab.",
+      "blank": "estates",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "exceed",
+    "headword": "exceed",
+    "sublist": 6,
+    "glossZh": "超過",
+    "glossEn": "go beyond a limit or amount",
+    "family": [
+      {
+        "form": "exceed",
+        "role": "動詞"
+      },
+      {
+        "form": "exceeded",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "Submissions may not exceed 8,000 words.",
+      "blank": "exceed"
+    },
+    "collocations": [
+      {
+        "left": "exceed",
+        "right": "the limit"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Costs {blank} the original quote.",
+      "blank": "exceeded",
+      "role": "動詞"
+    }
+  },
+  {
+    "id": "expert",
+    "headword": "expert",
+    "sublist": 6,
+    "glossZh": "專家",
+    "glossEn": "a person with specialised knowledge",
+    "family": [
+      {
+        "form": "expert",
+        "role": "形容詞"
+      },
+      {
+        "form": "expertly",
+        "role": "副詞"
+      },
+      {
+        "form": "expertise",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "An expert in archival law reviewed the licence.",
+      "blank": "expert"
+    },
+    "collocations": [
+      {
+        "left": "expert",
+        "right": "opinion"
+      },
+      {
+        "left": "leading",
+        "right": "expert"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Local {blank} informed the interview guide.",
+      "blank": "expertise",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "explicit",
+    "headword": "explicit",
+    "sublist": 6,
+    "glossZh": "明確的",
+    "glossEn": "stated clearly and in detail",
+    "family": [
+      {
+        "form": "explicit",
+        "role": "形容詞"
+      },
+      {
+        "form": "explicitly",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "Give an explicit rule for handling ties.",
+      "blank": "explicit"
+    },
+    "collocations": [
+      {
+        "left": "make",
+        "right": "explicit"
+      },
+      {
+        "left": "explicit",
+        "right": "reference"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The assumption is {blank} stated.",
+      "blank": "explicitly",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "federal",
+    "headword": "federal",
+    "sublist": 6,
+    "glossZh": "聯邦的",
+    "glossEn": "relating to a union of states with a central government",
+    "family": [
+      {
+        "form": "federal",
+        "role": "形容詞"
+      },
+      {
+        "form": "federation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Federal funding covered the second year only.",
+      "blank": "Federal"
+    },
+    "collocations": [
+      {
+        "left": "federal",
+        "right": "government"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The {blank} issued a joint statement.",
+      "blank": "federation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "fee",
+    "headword": "fee",
+    "sublist": 6,
+    "glossZh": "費用",
+    "glossEn": "a payment charged for a service",
+    "family": [
+      {
+        "form": "fee",
+        "role": "名詞"
+      },
+      {
+        "form": "fees",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The late fee is waived for medical reasons.",
+      "blank": "fee"
+    },
+    "collocations": [
+      {
+        "left": "tuition",
+        "right": "fee"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two extra {blank} appear on the invoice.",
+      "blank": "fees",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "flexible",
+    "headword": "flexible",
+    "sublist": 6,
+    "glossZh": "有彈性的",
+    "glossEn": "able to change to fit new conditions",
+    "family": [
+      {
+        "form": "flexible",
+        "role": "形容詞"
+      },
+      {
+        "form": "flexibility",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "A flexible deadline helped part-time students.",
+      "blank": "flexible"
+    },
+    "collocations": [
+      {
+        "left": "flexible",
+        "right": "approach"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Timetable {blank} is discussed in the review.",
+      "blank": "flexibility",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "furthermore",
+    "headword": "furthermore",
+    "sublist": 6,
+    "glossZh": "此外",
+    "glossEn": "in addition to what has just been said",
+    "family": [
+      {
+        "form": "furthermore",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "The sample is small; furthermore, three sites dropped out.",
+      "blank": "furthermore"
+    },
+    "collocations": []
+  },
+  {
+    "id": "gender",
+    "headword": "gender",
+    "sublist": 6,
+    "glossZh": "性別",
+    "glossEn": "social roles and identities related to being male, female, or other",
+    "family": [
+      {
+        "form": "gender",
+        "role": "名詞"
+      },
+      {
+        "form": "genders",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Gender was recorded in four self-identified categories.",
+      "blank": "Gender"
+    },
+    "collocations": [
+      {
+        "left": "gender",
+        "right": "difference"
+      },
+      {
+        "left": "gender",
+        "right": "gap"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} items were optional.",
+      "blank": "genders",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "ignorant",
+    "headword": "ignorant",
+    "sublist": 6,
+    "glossZh": "不知情的",
+    "glossEn": "lacking knowledge of a fact or subject",
+    "family": [
+      {
+        "form": "ignorant",
+        "role": "形容詞"
+      },
+      {
+        "form": "ignorance",
+        "role": "名詞"
+      },
+      {
+        "form": "ignore",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Readers should not remain ignorant of the missing-data rule.",
+      "blank": "ignorant"
+    },
+    "collocations": [
+      {
+        "left": "ignorant",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "{blank} of the local statute caused the delay.",
+      "blank": "Ignorance",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "incentive",
+    "headword": "incentive",
+    "sublist": 6,
+    "glossZh": "誘因",
+    "glossEn": "something that encourages a particular action",
+    "family": [
+      {
+        "form": "incentive",
+        "role": "形容詞"
+      },
+      {
+        "form": "incentives",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "A small voucher was the only incentive offered.",
+      "blank": "incentive"
+    },
+    "collocations": [
+      {
+        "left": "financial",
+        "right": "incentive"
+      },
+      {
+        "left": "provide",
+        "right": "an incentive"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} schemes are compared.",
+      "blank": "incentives",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "incidence",
+    "headword": "incidence",
+    "sublist": 6,
+    "glossZh": "發生率",
+    "glossEn": "how often something occurs in a population",
+    "family": [
+      {
+        "form": "incidence",
+        "role": "名詞"
+      },
+      {
+        "form": "incidentally",
+        "role": "副詞"
+      },
+      {
+        "form": "incident",
+        "role": "形容詞"
+      },
+      {
+        "form": "incidents",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The incidence of late work rose after the strike.",
+      "blank": "incidence"
+    },
+    "collocations": [
+      {
+        "left": "incidence",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Related {blank} are logged in the same file.",
+      "blank": "incidents",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "incorporate",
+    "headword": "incorporate",
+    "sublist": 6,
+    "glossZh": "納入",
+    "glossEn": "include something as part of a whole",
+    "family": [
+      {
+        "form": "incorporate",
+        "role": "動詞"
+      },
+      {
+        "form": "incorporation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The revision will incorporate the reviewers' main request.",
+      "blank": "incorporate"
+    },
+    "collocations": [
+      {
+        "left": "incorporate",
+        "right": "into"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "{blank} of that chapter delayed the proofs.",
+      "blank": "Incorporation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "index",
+    "headword": "index",
+    "sublist": 6,
+    "glossZh": "指數；索引",
+    "glossEn": "a list or a composite measure",
+    "family": [
+      {
+        "form": "index",
+        "role": "動詞"
+      },
+      {
+        "form": "indexed",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "An index of deprivation is used as a covariate.",
+      "blank": "index"
+    },
+    "collocations": [
+      {
+        "left": "subject",
+        "right": "index"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The volume is fully {blank}.",
+      "blank": "indexed",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "inhibit",
+    "headword": "inhibit",
+    "sublist": 6,
+    "glossZh": "抑制",
+    "glossEn": "slow down or prevent a process",
+    "family": [
+      {
+        "form": "inhibit",
+        "role": "動詞"
+      },
+      {
+        "form": "inhibition",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "High fees inhibit applications from the poorest decile.",
+      "blank": "inhibit"
+    },
+    "collocations": [
+      {
+        "left": "inhibit",
+        "right": "growth"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Fear of error can be an {blank} in first drafts.",
+      "blank": "inhibition",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "initiate",
+    "headword": "initiate",
+    "sublist": 6,
+    "glossZh": "發起",
+    "glossEn": "start a process formally",
+    "family": [
+      {
+        "form": "initiate",
+        "role": "動詞"
+      },
+      {
+        "form": "initiative",
+        "role": "形容詞"
+      },
+      {
+        "form": "initiation",
+        "role": "名詞"
+      },
+      {
+        "form": "initiator",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The dean will initiate a review of the marking load.",
+      "blank": "initiate"
+    },
+    "collocations": [
+      {
+        "left": "initiate",
+        "right": "a process"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Student {blank} led to the new forum.",
+      "blank": "initiative",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "input",
+    "headword": "input",
+    "sublist": 6,
+    "glossZh": "投入；輸入",
+    "glossEn": "what is put into a process, or to contribute it",
+    "family": [
+      {
+        "form": "input",
+        "role": "名詞"
+      },
+      {
+        "form": "inputs",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Staff input shaped the final wording of the rubric.",
+      "blank": "input"
+    },
+    "collocations": [
+      {
+        "left": "input",
+        "right": "from"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two extra {blank} are required by the model.",
+      "blank": "inputs",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "instruct",
+    "headword": "instruct",
+    "sublist": 6,
+    "glossZh": "指示；教授",
+    "glossEn": "tell someone how to do something, or teach",
+    "family": [
+      {
+        "form": "instruct",
+        "role": "動詞"
+      },
+      {
+        "form": "instructive",
+        "role": "形容詞"
+      },
+      {
+        "form": "instruction",
+        "role": "名詞"
+      },
+      {
+        "form": "instructions",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "The protocol will instruct coders to flag unclear turns.",
+      "blank": "instruct"
+    },
+    "collocations": [
+      {
+        "left": "instruct",
+        "right": "students"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Written {blank} accompany the kit.",
+      "blank": "instructions",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "intelligent",
+    "headword": "intelligent",
+    "sublist": 6,
+    "glossZh": "聰明的",
+    "glossEn": "able to learn, reason, and understand well",
+    "family": [
+      {
+        "form": "intelligent",
+        "role": "形容詞"
+      },
+      {
+        "form": "intelligently",
+        "role": "副詞"
+      },
+      {
+        "form": "intelligence",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "An intelligent parse of the log files saved hours.",
+      "blank": "intelligent"
+    },
+    "collocations": [
+      {
+        "left": "intelligent",
+        "right": "design"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Artificial {blank} tools are discussed only briefly.",
+      "blank": "intelligence",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "interval",
+    "headword": "interval",
+    "sublist": 6,
+    "glossZh": "間隔",
+    "glossEn": "the time or distance between two points",
+    "family": [
+      {
+        "form": "interval",
+        "role": "形容詞"
+      },
+      {
+        "form": "intervals",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "A two-week interval separated the tests.",
+      "blank": "interval"
+    },
+    "collocations": [
+      {
+        "left": "confidence",
+        "right": "interval"
+      },
+      {
+        "left": "time",
+        "right": "interval"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Shorter {blank} improved recall.",
+      "blank": "intervals",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "lecture",
+    "headword": "lecture",
+    "sublist": 6,
+    "glossZh": "講課",
+    "glossEn": "a formal talk to a class, or to give one",
+    "family": [
+      {
+        "form": "lecture",
+        "role": "名詞"
+      },
+      {
+        "form": "lecturer",
+        "role": "名詞"
+      },
+      {
+        "form": "lectures",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The opening lecture sets out the assessment rules.",
+      "blank": "lecture"
+    },
+    "collocations": [
+      {
+        "left": "guest",
+        "right": "lecture"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two guest {blank} are recorded for later viewing.",
+      "blank": "lectures",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "migrate",
+    "headword": "migrate",
+    "sublist": 6,
+    "glossZh": "遷移",
+    "glossEn": "move from one place, system, or form to another",
+    "family": [
+      {
+        "form": "migrate",
+        "role": "動詞"
+      },
+      {
+        "form": "migration",
+        "role": "名詞"
+      },
+      {
+        "form": "migrant",
+        "role": "形容詞"
+      },
+      {
+        "form": "migratory",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "The archive will migrate to a new server in June.",
+      "blank": "migrate"
+    },
+    "collocations": [
+      {
+        "left": "migrate",
+        "right": "to"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Labour {blank} is mapped in chapter 4.",
+      "blank": "migration",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "minimum",
+    "headword": "minimum",
+    "sublist": 6,
+    "glossZh": "最低限度",
+    "glossEn": "the smallest amount that is acceptable",
+    "family": [
+      {
+        "form": "minimum",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The minimum sample is 200 complete cases.",
+      "blank": "minimum"
+    },
+    "collocations": [
+      {
+        "left": "minimum",
+        "right": "requirement"
+      },
+      {
+        "left": "at",
+        "right": "a minimum"
+      }
+    ]
+  },
+  {
+    "id": "ministry",
+    "headword": "ministry",
+    "sublist": 6,
+    "glossZh": "部會",
+    "glossEn": "a government department, or its work",
+    "family": [
+      {
+        "form": "ministry",
+        "role": "名詞"
+      },
+      {
+        "form": "ministerial",
+        "role": "形容詞"
+      },
+      {
+        "form": "ministries",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The education ministry issued a new circular.",
+      "blank": "ministry"
+    },
+    "collocations": [
+      {
+        "left": "ministry",
+        "right": "of"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} jointly funded the trial.",
+      "blank": "ministries",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "motive",
+    "headword": "motive",
+    "sublist": 6,
+    "glossZh": "動機",
+    "glossEn": "a reason that drives an action",
+    "family": [
+      {
+        "form": "motive",
+        "role": "形容詞"
+      },
+      {
+        "form": "motivation",
+        "role": "名詞"
+      },
+      {
+        "form": "motivate",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "The stated motive for withdrawal was cost.",
+      "blank": "motive"
+    },
+    "collocations": [
+      {
+        "left": "ulterior",
+        "right": "motive"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Staff {blank} the volunteers with weekly updates.",
+      "blank": "motivate",
+      "role": "動詞"
+    }
+  },
+  {
+    "id": "neutral",
+    "headword": "neutral",
+    "sublist": 6,
+    "glossZh": "中立的",
+    "glossEn": "not taking a side",
+    "family": [
+      {
+        "form": "neutral",
+        "role": "形容詞"
+      },
+      {
+        "form": "neutralisation",
+        "role": "名詞"
+      },
+      {
+        "form": "neutralise",
+        "role": "動詞"
+      },
+      {
+        "form": "neutrality",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The chair remained neutral during the vote.",
+      "blank": "neutral"
+    },
+    "collocations": [
+      {
+        "left": "neutral",
+        "right": "tone"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Political {blank} is required of the panel.",
+      "blank": "neutrality",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "nevertheless",
+    "headword": "nevertheless",
+    "sublist": 6,
+    "glossZh": "儘管如此",
+    "glossEn": "in spite of what has just been said",
+    "family": [
+      {
+        "form": "nevertheless",
+        "role": "副詞"
+      }
+    ],
+    "example": {
+      "en": "The sample is small; nevertheless, the pattern is consistent.",
+      "blank": "nevertheless"
+    },
+    "collocations": []
+  },
+  {
+    "id": "overseas",
+    "headword": "overseas",
+    "sublist": 6,
+    "glossZh": "海外的",
+    "glossEn": "in or to another country across the sea",
+    "family": [
+      {
+        "form": "overseas",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "Overseas students made up a third of the cohort.",
+      "blank": "Overseas"
+    },
+    "collocations": [
+      {
+        "left": "overseas",
+        "right": "students"
+      }
+    ]
+  },
+  {
+    "id": "precede",
+    "headword": "precede",
+    "sublist": 6,
+    "glossZh": "先於",
+    "glossEn": "come before something in time or order",
+    "family": [
+      {
+        "form": "precede",
+        "role": "動詞"
+      },
+      {
+        "form": "precedence",
+        "role": "名詞"
+      },
+      {
+        "form": "precedent",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "A short briefing should precede each interview.",
+      "blank": "precede"
+    },
+    "collocations": [
+      {
+        "left": "precede",
+        "right": "the discussion"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "There is no recent {blank} for this ruling.",
+      "blank": "precedent",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "presume",
+    "headword": "presume",
+    "sublist": 6,
+    "glossZh": "假定",
+    "glossEn": "take something as true until shown otherwise",
+    "family": [
+      {
+        "form": "presume",
+        "role": "動詞"
+      },
+      {
+        "form": "presumably",
+        "role": "副詞"
+      },
+      {
+        "form": "presumption",
+        "role": "名詞"
+      },
+      {
+        "form": "presumptuous",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "We presume that missing dates are missing at random.",
+      "blank": "presume"
+    },
+    "collocations": [
+      {
+        "left": "presume",
+        "right": "that"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "That {blank} is stated in the protocol.",
+      "blank": "presumption",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "rational",
+    "headword": "rational",
+    "sublist": 6,
+    "glossZh": "理性的",
+    "glossEn": "based on reason rather than on impulse",
+    "family": [
+      {
+        "form": "rational",
+        "role": "形容詞"
+      },
+      {
+        "form": "rationally",
+        "role": "副詞"
+      },
+      {
+        "form": "rationalisation",
+        "role": "名詞"
+      },
+      {
+        "form": "rationalise",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "A rational reconstruction of the budget is offered below.",
+      "blank": "rational"
+    },
+    "collocations": [
+      {
+        "left": "rational",
+        "right": "choice"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The cut is {blank} only if demand stays flat.",
+      "blank": "rationally",
+      "role": "副詞"
+    }
+  },
+  {
+    "id": "recover",
+    "headword": "recover",
+    "sublist": 6,
+    "glossZh": "復原；收回",
+    "glossEn": "return to a former state, or get something back",
+    "family": [
+      {
+        "form": "recover",
+        "role": "動詞"
+      },
+      {
+        "form": "recoverable",
+        "role": "形容詞"
+      },
+      {
+        "form": "recovers",
+        "role": "名詞"
+      },
+      {
+        "form": "recovery",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The archive may never recover the lost tapes.",
+      "blank": "recover"
+    },
+    "collocations": [
+      {
+        "left": "recover",
+        "right": "from"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "{blank} of the files took three days.",
+      "blank": "Recovery",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "reveal",
+    "headword": "reveal",
+    "sublist": 6,
+    "glossZh": "揭示",
+    "glossEn": "make something known that was hidden",
+    "family": [
+      {
+        "form": "reveal",
+        "role": "形容詞"
+      },
+      {
+        "form": "revelation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The residuals reveal a cluster of late outliers.",
+      "blank": "reveal"
+    },
+    "collocations": [
+      {
+        "left": "reveal",
+        "right": "that"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "A later {blank} changed the reading of the letters.",
+      "blank": "revelation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "scope",
+    "headword": "scope",
+    "sublist": 6,
+    "glossZh": "範圍",
+    "glossEn": "the range of what is covered or possible",
+    "family": [
+      {
+        "form": "scope",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The scope of the review is limited to English-language trials.",
+      "blank": "scope"
+    },
+    "collocations": [
+      {
+        "left": "scope",
+        "right": "of"
+      },
+      {
+        "left": "beyond",
+        "right": "the scope"
+      }
+    ]
+  },
+  {
+    "id": "subsidy",
+    "headword": "subsidy",
+    "sublist": 6,
+    "glossZh": "補貼",
+    "glossEn": "money given to keep a price or activity going",
+    "family": [
+      {
+        "form": "subsidy",
+        "role": "名詞"
+      },
+      {
+        "form": "subsidiary",
+        "role": "形容詞"
+      },
+      {
+        "form": "subsidise",
+        "role": "動詞"
+      },
+      {
+        "form": "subsidies",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "A travel subsidy was offered to rural participants.",
+      "blank": "subsidy"
+    },
+    "collocations": [
+      {
+        "left": "government",
+        "right": "subsidy"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Two {blank} schemes ran in parallel.",
+      "blank": "subsidies",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "tape",
+    "headword": "tape",
+    "sublist": 6,
+    "glossZh": "錄音帶；膠帶",
+    "glossEn": "a magnetic recording strip, or to record on one",
+    "family": [
+      {
+        "form": "tape",
+        "role": "動詞"
+      },
+      {
+        "form": "taped",
+        "role": "動詞"
+      },
+      {
+        "form": "tapes",
+        "role": "動詞"
+      }
+    ],
+    "example": {
+      "en": "The original tape is stored in the cold room.",
+      "blank": "tape"
+    },
+    "collocations": [
+      {
+        "left": "on",
+        "right": "tape"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Interview {blank} were digitised in 2018.",
+      "blank": "tapes",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "trace",
+    "headword": "trace",
+    "sublist": 6,
+    "glossZh": "追溯",
+    "glossEn": "find the origin or path of something",
+    "family": [
+      {
+        "form": "trace",
+        "role": "動詞"
+      },
+      {
+        "form": "traceable",
+        "role": "形容詞"
+      }
+    ],
+    "example": {
+      "en": "We can trace the error to a single merged cell.",
+      "blank": "trace"
+    },
+    "collocations": [
+      {
+        "left": "trace",
+        "right": "the origin"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The map is no longer {blank} to a named surveyor.",
+      "blank": "traceable",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "transform",
+    "headword": "transform",
+    "sublist": 6,
+    "glossZh": "轉變",
+    "glossEn": "change the form or character of something thoroughly",
+    "family": [
+      {
+        "form": "transform",
+        "role": "動詞"
+      },
+      {
+        "form": "transformation",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "A log transform the skewed counts.",
+      "blank": "transform"
+    },
+    "collocations": [
+      {
+        "left": "transform",
+        "right": "into"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Digital {blank} of the archive took a year.",
+      "blank": "transformation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "transport",
+    "headword": "transport",
+    "sublist": 6,
+    "glossZh": "運輸",
+    "glossEn": "the moving of people or goods, or to move them",
+    "family": [
+      {
+        "form": "transport",
+        "role": "動詞"
+      },
+      {
+        "form": "transportation",
+        "role": "名詞"
+      },
+      {
+        "form": "transporter",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Poor transport limited access to the evening class.",
+      "blank": "transport"
+    },
+    "collocations": [
+      {
+        "left": "public",
+        "right": "transport"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "Sample {blank} is described in the protocol.",
+      "blank": "transportation",
+      "role": "名詞"
+    }
+  },
+  {
+    "id": "underlie",
+    "headword": "underlie",
+    "sublist": 6,
+    "glossZh": "構成…的基礎",
+    "glossEn": "be the hidden basis of something",
+    "family": [
+      {
+        "form": "underlie",
+        "role": "名詞"
+      },
+      {
+        "form": "underlay",
+        "role": "名詞"
+      },
+      {
+        "form": "underlying",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "Two assumptions underlie the whole argument.",
+      "blank": "underlie"
+    },
+    "collocations": [
+      {
+        "left": "underlie",
+        "right": "the approach"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "The {blank} model is sketched in Figure 1.",
+      "blank": "underlying",
+      "role": "形容詞"
+    }
+  },
+  {
+    "id": "utilise",
+    "headword": "utilise",
+    "sublist": 6,
+    "glossZh": "運用",
+    "glossEn": "make practical use of something",
+    "family": [
+      {
+        "form": "utilise",
+        "role": "動詞"
+      },
+      {
+        "form": "utilisation",
+        "role": "名詞"
+      },
+      {
+        "form": "utility",
+        "role": "名詞"
+      },
+      {
+        "form": "utiliser",
+        "role": "名詞"
+      }
+    ],
+    "example": {
+      "en": "The lab will utilise spare server time overnight.",
+      "blank": "utilise"
+    },
+    "collocations": [
+      {
+        "left": "utilise",
+        "right": "resources"
+      }
+    ],
+    "familyQuiz": {
+      "sentence": "{blank} of the spare rooms is still low.",
+      "blank": "Utilisation",
+      "role": "名詞"
+    }
+  }
+]

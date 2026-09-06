@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="WordList">
+  <rect width="512" height="512" rx="108" fill="#0e1612"/>
+  <rect x="118" y="96" width="276" height="320" rx="28" fill="#1d2b24" stroke="#7dce9f" stroke-width="18"/>
+  <rect x="156" y="156" width="200" height="22" rx="11" fill="#7dce9f"/>
+  <rect x="156" y="210" width="164" height="16" rx="8" fill="#9aaf9f"/>
+  <rect x="156" y="248" width="188" height="16" rx="8" fill="#9aaf9f"/>
+  <rect x="156" y="286" width="120" height="16" rx="8" fill="#d4b46a"/>
+</svg>

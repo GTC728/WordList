@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import type { ProgressState } from '../types'
+import type { AccentPreset, ProgressState, ThemeMode } from '../types'
+import type { ProgressEnvelope } from './persist'
+import { applyTheme } from './theme'
+import { startSyncLoop } from './sync'
 import {
   hydrateEnvelope,
   persistEnvelope,
@@ -9,13 +12,17 @@ import {
 } from './persist'
 import {
   addToReview,
+  answerFullItem,
   applyBankGame,
   applyReview,
+  clearFullRun,
   completeLesson,
   loadProgress,
   normalizeProgress,
   resetProgress,
+  setAppearance,
   setSpeech,
+  startFullRun,
 } from './progress'
 
 type ProgressContextValue = {
@@ -29,7 +36,11 @@ type ProgressContextValue = {
   review: (wordResults: { wordId: string; correct: boolean }[]) => void
   queueReview: (wordIds: string[]) => void
   toggleSpeech: (value: boolean) => void
+  setTheme: (theme: ThemeMode, accent: AccentPreset) => void
   finishBank: (scopeId: string, results: { blockId: string; correct: boolean }[]) => void
+  beginFull: (scopeId: string, order: ProgressState['full'][string]['order']) => void
+  markFull: (scopeId: string, correct: boolean) => void
+  dropFull: (scopeId: string) => void
   replace: (next: ProgressState) => void
   reset: () => void
 }
@@ -38,6 +49,10 @@ const ProgressContext = createContext<ProgressContextValue | null>(null)
 
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [progress, setProgress] = useState<ProgressState>(() => loadProgress())
+
+  useEffect(() => applyTheme(progress.settings.theme, progress.settings.accent), [progress.settings.theme, progress.settings.accent])
+
+  useEffect(() => startSyncLoop(), [])
 
   useEffect(() => {
     let cancelled = false
@@ -55,8 +70,14 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       const apply = pickNewest(winner, latest)
       if (apply) setProgress(normalizeProgress(apply.progress))
     })()
+    const onRemote = (event: Event) => {
+      const envelope = (event as CustomEvent<ProgressEnvelope>).detail
+      if (envelope?.progress) setProgress(normalizeProgress(envelope.progress))
+    }
+    window.addEventListener('wordlist-remote-progress', onRemote)
     return () => {
       cancelled = true
+      window.removeEventListener('wordlist-remote-progress', onRemote)
     }
   }, [])
 
@@ -75,8 +96,20 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       toggleSpeech: (speech) => {
         setProgress(setSpeech(progress, speech))
       },
+      setTheme: (theme, accent) => {
+        setProgress(setAppearance(progress, theme, accent))
+      },
       finishBank: (scopeId, results) => {
         setProgress(applyBankGame(progress, scopeId, results))
+      },
+      beginFull: (scopeId, order) => {
+        setProgress(startFullRun(progress, scopeId, order))
+      },
+      markFull: (scopeId, correct) => {
+        setProgress(answerFullItem(progress, scopeId, correct))
+      },
+      dropFull: (scopeId) => {
+        setProgress(clearFullRun(progress, scopeId))
       },
       replace: (next) => {
         setProgress(next)

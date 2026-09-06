@@ -21,10 +21,10 @@ export function ReviewPage() {
   if (due.length === 0 || questions.length === 0) {
     return (
       <main className="page">
-        <BackLink to="/" label="首頁" />
+        <BackLink to="/" label="課程" />
         <h1>複習</h1>
         <p className="lede">目前沒有到期的詞。上完一課並答錯幾題後，這裡會出現複習佇列。</p>
-        <Link className="primary" to="/course/awl">
+        <Link className="primary" to="/">
           去上課
         </Link>
       </main>
@@ -34,7 +34,7 @@ export function ReviewPage() {
   if (done) {
     return (
       <main className="page">
-        <BackLink to="/" label="首頁" />
+        <BackLink to="/" label="課程" />
         <h1>複習結束</h1>
         <p className="metric-lg">
           {score.correct}/{score.total}
@@ -48,7 +48,7 @@ export function ReviewPage() {
 
   return (
     <main className="page">
-      <BackLink to="/" label="首頁" />
+        <BackLink to="/" label="課程" />
       <h1>複習 {due.length} 詞</h1>
       <QuizSession
         questions={questions}

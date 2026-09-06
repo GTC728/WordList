@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { BackLink } from '../components/ui'
 import { useProgress } from '../lib/ProgressContext'
 import {
   bindNewBackupFile,
@@ -12,6 +11,17 @@ import {
   type BackupStatus,
 } from '../lib/persist'
 import { normalizeProgress } from '../lib/progress'
+import {
+  createSyncCode,
+  formatSyncCode,
+  joinSyncCode,
+  normalizeJoinCode,
+  readSyncMeta,
+  unbindSync,
+  type SyncMeta,
+} from '../lib/sync'
+import { accentOptions } from '../lib/theme'
+import type { ThemeMode } from '../types'
 
 function formatStamp(ms: number | null): string {
   if (!ms) return '還沒有'
@@ -23,18 +33,24 @@ function isAbort(error: unknown): boolean {
 }
 
 export function SettingsPage() {
-  const { progress, toggleSpeech, reset, replace } = useProgress()
+  const { progress, toggleSpeech, reset, replace, setTheme } = useProgress()
   const fileInput = useRef<HTMLInputElement>(null)
   const [status, setStatus] = useState<BackupStatus | null>(null)
+  const [sync, setSync] = useState<SyncMeta>(() => readSyncMeta())
+  const [joinCode, setJoinCode] = useState('')
   const [message, setMessage] = useState('')
   const [busy, setBusy] = useState(false)
 
   async function refreshStatus() {
     setStatus(await getBackupStatus())
+    setSync(readSyncMeta())
   }
 
   useEffect(() => {
     void refreshStatus()
+    const onMeta = () => setSync(readSyncMeta())
+    window.addEventListener('wordlist-sync-meta', onMeta)
+    return () => window.removeEventListener('wordlist-sync-meta', onMeta)
   }, [])
 
   async function run(action: () => Promise<void>) {
@@ -54,49 +70,139 @@ export function SettingsPage() {
 
   return (
     <main className="page">
-      <BackLink to="/" label="首頁" />
-      <h1>設定</h1>
-      <label className="toggle" htmlFor="speech-toggle">
-        <input
-          id="speech-toggle"
-          type="checkbox"
-          checked={progress.settings.speech}
-          onChange={(event) => toggleSpeech(event.target.checked)}
-        />
-        朗讀英文（瀏覽器語音）
-      </label>
+      <p className="eyebrow">設定</p>
+      <h1>工作區</h1>
 
-      <section className="backup-card">
-        <h2>記憶與備份</h2>
-        <p>
-          練習紀錄會同時寫進這個瀏覽器的快取與 IndexedDB，開頁比較快，也比較耐清快取。兩邊都還是「這個瀏覽器」，換裝置或清網站資料仍會不見。
-        </p>
-        <p>
-          要真正帶走進度：匯出一份 JSON（可丟進雲碟），或在 Chrome／Edge 綁定一個你自己的檔，之後每次練習會自動覆寫那個檔。
-        </p>
+      <p className="section-label">跨裝置同步</p>
+      <div className="ui-grouped-section">
+        <div className="ui-grouped-row">
+          <div>
+            <strong>同步碼</strong>
+            <p className="muted">{sync.code ? '電腦和手機輸入同一組碼就會共用進度' : '還沒綁定'}</p>
+          </div>
+        </div>
+        {sync.code ? (
+          <>
+            <div className="ui-grouped-row">
+              <span className="sync-code">{formatSyncCode(sync.code)}</span>
+              <button
+                type="button"
+                className="primary ghost"
+                onClick={() => void navigator.clipboard.writeText(sync.code ?? '')}
+              >
+                複製
+              </button>
+            </div>
+            <div className="ui-grouped-row">
+              <span>上次同步</span>
+              <span className="muted">{formatStamp(sync.lastPushAt ?? sync.lastPullAt)}</span>
+            </div>
+            <button type="button" className="ui-grouped-row" disabled={busy} onClick={() => unbindSync()}>
+              這台解除同步
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="ui-grouped-row"
+              disabled={busy}
+              onClick={() =>
+                run(async () => {
+                  const code = await createSyncCode()
+                  setMessage(`已建立同步碼 ${formatSyncCode(code)}。在另一台裝置貼上即可。`)
+                })
+              }
+            >
+              建立同步碼
+            </button>
+            <div className="ui-grouped-row" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+              <input
+                className="field"
+                value={joinCode}
+                placeholder="貼上另一台的同步碼"
+                onChange={(event) => setJoinCode(event.target.value)}
+              />
+              <button
+                type="button"
+                className="primary"
+                disabled={busy || normalizeJoinCode(joinCode).length < 8}
+                onClick={() =>
+                  run(async () => {
+                    const envelope = await joinSyncCode(joinCode)
+                    replace(normalizeProgress(envelope.progress))
+                    setJoinCode('')
+                    setMessage('已連上，並與雲端進度合併。')
+                  })
+                }
+              >
+                加入同步
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      <p className="footnote">以最新寫入為準。電腦開一份、手機開一份，貼上同一組碼。沒有帳號。</p>
+
+      <p className="section-label">外觀</p>
+      <div className="ui-grouped-section">
+        <div className="ui-grouped-row">
+          <span>主題</span>
+          <div className="ui-segment">
+            {(['dark', 'light', 'system'] as ThemeMode[]).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                className={`ui-segment-btn ${progress.settings.theme === mode ? 'is-on' : ''}`}
+                onClick={() => setTheme(mode, progress.settings.accent)}
+              >
+                {mode === 'dark' ? '深色' : mode === 'light' ? '淺色' : '系統'}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="ui-grouped-row">
+          <span>強調色</span>
+          <div className="accent-row">
+            {accentOptions.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                className={`accent-swatch ${progress.settings.accent === item.value ? 'is-on' : ''}`}
+                style={{ background: item.swatch }}
+                aria-label={item.label}
+                onClick={() => setTheme(progress.settings.theme, item.value)}
+              />
+            ))}
+          </div>
+        </div>
+        <label className="ui-grouped-row" htmlFor="speech-toggle">
+          <span>朗讀英文</span>
+          <input
+            id="speech-toggle"
+            type="checkbox"
+            checked={progress.settings.speech}
+            onChange={(event) => toggleSpeech(event.target.checked)}
+          />
+        </label>
+      </div>
+
+      <p className="section-label">本機備份</p>
+      <div className="backup-card">
+        <p>同步之外，仍可匯出 JSON，或在 Chrome／Edge 綁定一個你自己的檔。</p>
         <ul className="status-list">
           <li>上次寫入：{formatStamp(status?.lastSavedAt ?? null)}</li>
-          <li>上次帶走：{formatStamp(status?.lastExportAt ?? null)}</li>
-          <li>
-            綁定檔：
-            {status?.fileBound
-              ? `${status.fileName ?? '已綁定'}${status.fileWritable ? '（會自動寫入）' : '（權限過期，請再連一次）'}`
-              : '尚未綁定'}
-          </li>
-          <li>
-            瀏覽器持久儲存：
-            {status?.persistent ? '已答應盡量不清掉' : '未取得；清網站資料仍會丟'}
-          </li>
+          <li>綁定檔：{status?.fileBound ? status.fileName ?? '已綁定' : '尚未綁定'}</li>
         </ul>
         <div className="stack-btns">
           <button
             type="button"
-            className="primary"
+            className="primary ghost"
             disabled={busy}
             onClick={() =>
               run(async () => {
                 await downloadBackup(progress)
-                setMessage('已下載備份檔。請放到你找得到的地方，不要只留在下載資料夾。')
+                setMessage('已下載備份檔。')
               })
             }
           >
@@ -131,7 +237,7 @@ export function SettingsPage() {
                 onClick={() =>
                   run(async () => {
                     const name = await bindNewBackupFile(progress)
-                    setMessage(`已綁定 ${name}，之後練習會自動寫入。`)
+                    setMessage(`已綁定 ${name}`)
                   })
                 }
               >
@@ -143,15 +249,9 @@ export function SettingsPage() {
                 disabled={busy}
                 onClick={() =>
                   run(async () => {
-                    if (
-                      hasLearnedSomething(progress) &&
-                      !window.confirm('連到既有檔會用檔案裡的進度覆蓋現在這份，確定嗎？')
-                    ) {
-                      return
-                    }
                     const envelope = await connectBackupFile()
                     replace(normalizeProgress(envelope.progress))
-                    setMessage('已連到備份檔，並載入檔裡的進度。')
+                    setMessage('已連到備份檔。')
                   })
                 }
               >
@@ -165,7 +265,7 @@ export function SettingsPage() {
                   onClick={() =>
                     run(async () => {
                       await unbindBackupFile()
-                      setMessage('已解除綁定。瀏覽器裡的進度還在，只是不再自動寫檔。')
+                      setMessage('已解除綁定。')
                     })
                   }
                 >
@@ -175,18 +275,15 @@ export function SettingsPage() {
             </>
           )}
         </div>
-        {!status?.canBindFile && (
-          <p className="footnote">這個瀏覽器不能綁定本機檔，請用匯出／還原。Chrome 或 Edge 可以自動寫檔。</p>
-        )}
-        {message && <p className="backup-msg">{message}</p>}
-      </section>
+      </div>
+
+      {message && <p className="backup-msg">{message}</p>}
 
       <button
         type="button"
         className="danger"
         onClick={() => {
-          const extra = status?.fileBound ? '已綁定的本機檔也會被寫成空白。' : ''
-          if (window.confirm(`確定清除本機進度？${extra}此動作無法復原。`)) {
+          if (window.confirm('確定清除本機進度？此動作無法復原。')) {
             reset()
             void refreshStatus()
           }
@@ -194,7 +291,6 @@ export function SettingsPage() {
       >
         重設進度
       </button>
-      <p className="footnote">沒有帳號，也不會把進度傳到伺服器。</p>
     </main>
   )
 }

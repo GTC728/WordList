@@ -82,6 +82,7 @@ export function sublistScopeId(sublist: number): string {
 }
 
 export function getScopeWords(scopeId: string): WordCard[] {
+  if (scopeId === 'awl-all') return allWords
   const lesson = /^awl-lesson-(\d+)-(\d+)$/.exec(scopeId)
   if (lesson) return getLessonWords(Number(lesson[1]), Number(lesson[2]))
   const sub = /^awl-sub-(\d+)$/.exec(scopeId)
@@ -90,6 +91,13 @@ export function getScopeWords(scopeId: string): WordCard[] {
 }
 
 export function describeScope(scopeId: string): { title: string; detail: string; backTo: string } {
+  if (scopeId === 'awl-all') {
+    return {
+      title: '全部 570 詞',
+      detail: '每個單詞的每條題塊都會出現一次。可隨時離開，進度會留著。',
+      backTo: '/full',
+    }
+  }
   const lesson = /^awl-lesson-(\d+)-(\d+)$/.exec(scopeId)
   if (lesson) {
     const sublist = Number(lesson[1])
@@ -109,4 +117,17 @@ export function describeScope(scopeId: string): { title: string; detail: string;
     }
   }
   return { title: '題庫', detail: '', backTo: '/bank' }
+}
+
+export function describeFullScope(scopeId: string): { title: string; detail: string; backTo: string } {
+  if (scopeId === 'awl-all') {
+    return describeScope(scopeId)
+  }
+  const base = describeScope(scopeId)
+  return {
+    ...base,
+    title: base.title.replace('題庫', '全題'),
+    detail: '範圍內每一題塊都會出現一次，可隨時離開後續打。',
+    backTo: '/full',
+  }
 }

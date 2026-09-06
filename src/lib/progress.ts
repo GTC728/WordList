@@ -1,4 +1,4 @@
-import type { BankScopeState, ProgressState, SrsCard } from '../types'
+import type { AccentPreset, BankScopeState, FullRunState, ProgressState, SrsCard, ThemeMode } from '../types'
 import { applyBlockResult } from './bank/scheduler'
 import { persistEnvelope, readLocalEnvelope, toEnvelope } from './persist'
 import { createSrs, isDue, reviewSrs } from './srs'
@@ -9,19 +9,27 @@ export function emptyProgress(): ProgressState {
     lessonScores: {},
     srs: {},
     bank: {},
-    settings: { speech: true },
+    full: {},
+    settings: { speech: true, theme: 'dark', accent: 'green' },
   }
 }
 
 export function normalizeProgress(parsed: Partial<ProgressState> | null | undefined): ProgressState {
+  const theme = parsed?.settings?.theme
+  const accent = parsed?.settings?.accent
   return {
     ...emptyProgress(),
     ...parsed,
-    settings: { speech: parsed?.settings?.speech !== false },
+    settings: {
+      speech: parsed?.settings?.speech !== false,
+      theme: theme === 'light' || theme === 'system' || theme === 'dark' ? theme : 'dark',
+      accent: accent === 'blue' || accent === 'purple' || accent === 'green' ? accent : 'green',
+    },
     completedLessons: parsed?.completedLessons ?? [],
     lessonScores: parsed?.lessonScores ?? {},
     srs: parsed?.srs ?? {},
     bank: parsed?.bank ?? {},
+    full: parsed?.full ?? {},
   }
 }
 
@@ -107,6 +115,60 @@ export function dueCards(state: ProgressState, now = Date.now()): SrsCard[] {
 
 export function setSpeech(state: ProgressState, speech: boolean): ProgressState {
   const next = { ...state, settings: { ...state.settings, speech } }
+  saveProgress(next)
+  return next
+}
+
+export function setAppearance(
+  state: ProgressState,
+  theme: ThemeMode,
+  accent: AccentPreset,
+): ProgressState {
+  const next = { ...state, settings: { ...state.settings, theme, accent } }
+  saveProgress(next)
+  return next
+}
+
+export function startFullRun(state: ProgressState, scopeId: string, order: FullRunState['order']): ProgressState {
+  const run: FullRunState = { order, cursor: 0, answers: [], updatedAt: Date.now() }
+  const next = { ...state, full: { ...state.full, [scopeId]: run } }
+  saveProgress(next)
+  return next
+}
+
+export function answerFullItem(state: ProgressState, scopeId: string, correct: boolean): ProgressState {
+  const current = state.full[scopeId]
+  if (!current) return state
+  const answers = [...current.answers, correct]
+  const cursor = current.cursor + 1
+  const done = cursor >= current.order.length
+  const run: FullRunState = {
+    ...current,
+    cursor,
+    answers,
+    updatedAt: Date.now(),
+    finished: done
+      ? { correct: answers.filter(Boolean).length, total: answers.length, at: Date.now() }
+      : current.finished,
+  }
+  let nextState: ProgressState = { ...state, full: { ...state.full, [scopeId]: run } }
+  if (done) {
+    const results = current.order.flatMap((item, index) => {
+      const ok = answers[index]
+      const ids = item.k === 'mcq' ? [item.id] : item.ids
+      return ids.map((blockId) => ({ blockId, correct: ok }))
+    })
+    nextState = applyBankGame(nextState, `full:${scopeId}`, results)
+  } else {
+    saveProgress(nextState)
+  }
+  return nextState
+}
+
+export function clearFullRun(state: ProgressState, scopeId: string): ProgressState {
+  const full = { ...state.full }
+  delete full[scopeId]
+  const next = { ...state, full }
   saveProgress(next)
   return next
 }

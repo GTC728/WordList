@@ -14,7 +14,7 @@ export function SublistPage() {
   if (!lessonCount) {
     return (
       <main className="page">
-        <BackLink to="/course/awl" label="AWL" />
+        <BackLink to="/" label="課程" />
         <p>找不到這個 sublist。</p>
       </main>
     )
@@ -22,7 +22,7 @@ export function SublistPage() {
 
   return (
     <main className="page">
-      <BackLink to="/course/awl" label="AWL" />
+      <BackLink to="/" label="課程" />
       <h1>Sublist {sublist}</h1>
       <p className="lede">課程按課解鎖。題庫模式不擋進度，可對同一堆詞反覆抽題。</p>
       <Link className="banner" to={`/bank/${sublistScopeId(sublist)}`}>

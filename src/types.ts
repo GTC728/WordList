@@ -134,12 +134,30 @@ export type LessonScore = {
   at: number
 }
 
+export type ThemeMode = 'dark' | 'light' | 'system'
+export type AccentPreset = 'blue' | 'green' | 'purple'
+
+export type FullItem =
+  | { k: 'mcq'; id: string }
+  | { k: 'board'; type: 'native' | 'synonym' | 'collocation'; ids: string[] }
+
+export type FullRunState = {
+  order: FullItem[]
+  cursor: number
+  answers: boolean[]
+  updatedAt: number
+  finished?: { correct: number; total: number; at: number }
+}
+
 export type ProgressState = {
   completedLessons: string[]
   lessonScores: Record<string, LessonScore>
   srs: Record<string, SrsCard>
   bank: Record<string, BankScopeState>
+  full: Record<string, FullRunState>
   settings: {
     speech: boolean
+    theme: ThemeMode
+    accent: AccentPreset
   }
 }

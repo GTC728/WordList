@@ -209,6 +209,7 @@ export async function persistEnvelope(
   } catch {
     /* 狀態寫不進去就不擋練習 */
   }
+  window.dispatchEvent(new Event('wordlist-persisted'))
 }
 
 export async function hydrateEnvelope(): Promise<ProgressEnvelope | null> {

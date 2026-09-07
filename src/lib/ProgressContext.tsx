@@ -12,17 +12,15 @@ import {
 } from './persist'
 import {
   addToReview,
-  answerFullItem,
   applyBankGame,
   applyReview,
-  clearFullRun,
   completeLesson,
   loadProgress,
   normalizeProgress,
   resetProgress,
   setAppearance,
   setSpeech,
-  startFullRun,
+  toggleStars,
 } from './progress'
 
 type ProgressContextValue = {
@@ -32,15 +30,14 @@ type ProgressContextValue = {
     correct: number,
     total: number,
     wordResults: { wordId: string; correct: boolean }[],
+    hitWordIds?: string[],
   ) => void
-  review: (wordResults: { wordId: string; correct: boolean }[]) => void
+  review: (wordResults: { wordId: string; correct: boolean }[], hitWordIds?: string[]) => void
   queueReview: (wordIds: string[]) => void
   toggleSpeech: (value: boolean) => void
   setTheme: (theme: ThemeMode, accent: AccentPreset) => void
   finishBank: (scopeId: string, results: { blockId: string; correct: boolean }[]) => void
-  beginFull: (scopeId: string, order: ProgressState['full'][string]['order']) => void
-  markFull: (scopeId: string, correct: boolean) => void
-  dropFull: (scopeId: string) => void
+  toggleStars: (blockIds: string[]) => void
   replace: (next: ProgressState) => void
   reset: () => void
 }
@@ -84,11 +81,11 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const value = useMemo<ProgressContextValue>(
     () => ({
       progress,
-      complete: (lessonKey, correct, total, wordResults) => {
-        setProgress(completeLesson(progress, lessonKey, correct, total, wordResults))
+      complete: (lessonKey, correct, total, wordResults, hitWordIds) => {
+        setProgress(completeLesson(progress, lessonKey, correct, total, wordResults, hitWordIds))
       },
-      review: (wordResults) => {
-        setProgress(applyReview(progress, wordResults))
+      review: (wordResults, hitWordIds) => {
+        setProgress(applyReview(progress, wordResults, hitWordIds))
       },
       queueReview: (wordIds) => {
         setProgress(addToReview(progress, wordIds))
@@ -102,14 +99,8 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       finishBank: (scopeId, results) => {
         setProgress(applyBankGame(progress, scopeId, results))
       },
-      beginFull: (scopeId, order) => {
-        setProgress(startFullRun(progress, scopeId, order))
-      },
-      markFull: (scopeId, correct) => {
-        setProgress(answerFullItem(progress, scopeId, correct))
-      },
-      dropFull: (scopeId) => {
-        setProgress(clearFullRun(progress, scopeId))
+      toggleStars: (blockIds) => {
+        setProgress((current) => toggleStars(current, blockIds))
       },
       replace: (next) => {
         setProgress(next)

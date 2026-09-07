@@ -6,9 +6,10 @@ type Props = {
   pairs: Collocation[]
   onDone: (perfect: boolean) => void
   disabled: boolean
+  stopOnMiss?: boolean
 }
 
-export function MatchBoard({ pairs, onDone, disabled }: Props) {
+export function MatchBoard({ pairs, onDone, disabled, stopOnMiss }: Props) {
   const lefts = useMemo(() => shuffle(pairs.map((pair) => pair.left)), [pairs])
   const rights = useMemo(() => shuffle(pairs.map((pair) => pair.right)), [pairs])
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null)
@@ -35,6 +36,7 @@ export function MatchBoard({ pairs, onDone, disabled }: Props) {
     } else {
       setMistakes((count) => count + 1)
       setWrong(right)
+      if (stopOnMiss) onDone(false)
     }
   }
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { speak } from '../lib/speech'
+import { Icon } from './Icon'
 
 export function SpeakButton({
   text,
@@ -12,21 +13,16 @@ export function SpeakButton({
 }) {
   if (!enabled || !text) return null
   return (
-    <button
-      type="button"
-      className="speak"
-      onClick={() => speak(text, true)}
-      aria-label={label}
-    >
-      聽
+    <button type="button" className="speak ui-pressable" onClick={() => speak(text, true)} aria-label={label}>
+      <Icon name="speaker" />
     </button>
   )
 }
 
 export function BackLink({ to, label }: { to: string; label: string }) {
   return (
-    <Link className="back" to={to}>
-      ← {label}
+    <Link className="back ui-pressable" to={to} aria-label={label}>
+      <Icon name="chevronLeft" />
     </Link>
   )
 }

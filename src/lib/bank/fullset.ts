@@ -1,7 +1,8 @@
 import { matchPrompt } from '../quiz'
 import { shuffle } from '../shuffle'
-import { blocksForPile, materializeMcq } from './blocks'
+import { blocksForPile, materializeMcq, materializeSpell } from './blocks'
 import type { FullItem, Question, QuestionBlock, WordCard } from '../../types'
+import { canSpellWord, isNewWord } from '../hits'
 
 const BOARD_SIZE = 4
 const MATCH_TYPES = ['native', 'synonym', 'collocation'] as const
@@ -29,29 +30,48 @@ function chunk<T>(items: T[], size: number): T[][] {
   return groups
 }
 
-export function countFullItems(words: WordCard[]): { questions: number; blocks: number } {
-  const order = buildFullOrder(words)
-  const blocks = order.reduce((sum, item) => sum + (item.k === 'mcq' ? 1 : item.ids.length), 0)
-  return { questions: order.length, blocks }
-}
-
-export function buildFullOrder(words: WordCard[]): FullItem[] {
+export function catalogFullItems(words: WordCard[], wordHits: Record<string, number> = {}): FullItem[] {
   const blocks = blocksForPile(words)
   const items: FullItem[] = []
 
   for (const block of blocks) {
-    if (block.kind === 'mcq') items.push({ k: 'mcq', id: block.id })
+    if (block.kind === 'type') {
+      if (!canSpellWord(block.wordId, wordHits)) continue
+      items.push({ k: 'mcq', id: block.id })
+      continue
+    }
+    if (block.kind !== 'mcq') continue
+    if (isNewWord(block.wordId, wordHits) && block.id !== `${block.wordId}:meaning:0`) continue
+    items.push({ k: 'mcq', id: block.id })
   }
 
   for (const type of MATCH_TYPES) {
-    const pairs = uniquePairs(blocks.filter((block) => block.kind === 'pair' && block.type === type))
+    const pairs = uniquePairs(
+      blocks.filter(
+        (block) => block.kind === 'pair' && block.type === type && !isNewWord(block.wordId, wordHits),
+      ),
+    )
     for (const group of chunk(pairs, BOARD_SIZE)) {
       if (group.length === 0) continue
       items.push({ k: 'board', type, ids: group.map((item) => item.id) })
     }
   }
 
-  return shuffle(items)
+  return items
+}
+
+export function fullItemKey(item: FullItem): string {
+  return item.k === 'mcq' ? `mcq:${item.id}` : `board:${item.type}:${item.ids.join(',')}`
+}
+
+export function countFullItems(words: WordCard[]): { questions: number; blocks: number } {
+  const order = catalogFullItems(words)
+  const blocks = order.reduce((sum, item) => sum + (item.k === 'mcq' ? 1 : item.ids.length), 0)
+  return { questions: order.length, blocks }
+}
+
+export function buildFullOrder(words: WordCard[]): FullItem[] {
+  return shuffle(catalogFullItems(words))
 }
 
 export function materializeFullItem(item: FullItem, words: WordCard[]): Question | null {
@@ -61,6 +81,7 @@ export function materializeFullItem(item: FullItem, words: WordCard[]): Question
   if (item.k === 'mcq') {
     const block = byId.get(item.id)
     if (!block) return null
+    if (block.kind === 'type') return materializeSpell(block)
     if (block.kind === 'mcq') return materializeMcq(block, words)
     if (block.kind === 'pair' && block.pair) {
       return {

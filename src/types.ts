@@ -52,6 +52,7 @@ export type QuestionType =
   | 'collocation'
   | 'synonym'
   | 'native'
+  | 'spell'
   | 'register'
   | 'hedging'
   | 'reporting'
@@ -68,6 +69,7 @@ export type BankQuestionType =
   | 'collocation'
   | 'synonym'
   | 'native'
+  | 'spell'
 
 export type DistractorField = 'glossZh' | 'glossEn' | 'headword' | 'blank' | 'synonym'
 
@@ -76,7 +78,7 @@ export type QuestionBlock = {
   id: string
   type: BankQuestionType
   wordId: string
-  kind: 'mcq' | 'pair'
+  kind: 'mcq' | 'pair' | 'type'
   prompt?: string
   hint?: string
   speak?: string
@@ -105,7 +107,17 @@ export type MatchQuestion = {
   pairs: Collocation[]
 }
 
-export type Question = McqQuestion | MatchQuestion
+export type TypeQuestion = {
+  type: 'spell'
+  wordId: string
+  blockId?: string
+  prompt: string
+  hint?: string
+  speak?: string
+  answer: string
+}
+
+export type Question = McqQuestion | MatchQuestion | TypeQuestion
 
 export type BlockStat = {
   lastGame: number
@@ -113,6 +125,9 @@ export type BlockStat = {
   consecutiveWrong: number
   seen: number
   dueGame: number
+  correct?: number
+  wrong?: number
+  lastSeenAt?: number
 }
 
 export type BankScopeState = {
@@ -155,6 +170,8 @@ export type ProgressState = {
   srs: Record<string, SrsCard>
   bank: Record<string, BankScopeState>
   full: Record<string, FullRunState>
+  stars: Record<string, number>
+  wordHits: Record<string, number>
   settings: {
     speech: boolean
     theme: ThemeMode

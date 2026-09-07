@@ -3,12 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
-    <link rel="apple-touch-icon" href="%BASE_URL%icon.svg" />
+    <link rel="apple-touch-icon" href="%BASE_URL%icons/icon-192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0e1612" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="學術英文單字 PWA，第一門課為 Academic Word List。" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="WordList" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>WordList</title>
+    <script>
+      try {
+        var env = JSON.parse(localStorage.getItem('wordlist.progress.v1') || 'null')
+        var settings = env && env.progress && env.progress.settings
+        var theme = settings && settings.theme
+        var accent = settings && settings.accent
+        var dark = { s: '#000000', e: '#1c1c1e', m: '#2c2c2e', t: '#ffffff', d: '#98989d' }
+        var light = { s: '#f2f2f7', e: '#ffffff', m: '#d1d1d6', t: '#000000', d: '#6c6c70' }
+        var accents = {
+          green: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' },
+          blue: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+          purple: { 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce' },
+        }
+        var mode =
+          theme === 'light' || theme === 'dark'
+            ? theme
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark'
+        var pal = accents[accent] || accents.green
+        var surf = mode === 'light' ? light : dark
+        var root = document.documentElement
+        root.dataset.theme = mode
+        root.style.setProperty('--color-surface', surf.s)
+        root.style.setProperty('--color-surface-elevated', surf.e)
+        root.style.setProperty('--color-surface-muted', surf.m)
+        root.style.setProperty('--color-text-primary', surf.t)
+        root.style.setProperty('--color-text-secondary', surf.d)
+        root.style.setProperty('--color-brand-400', pal[400])
+        root.style.setProperty('--color-brand-500', pal[500])
+        root.style.setProperty('--color-brand-600', pal[600])
+        root.style.setProperty('--color-brand-700', pal[700])
+        root.style.setProperty('--color-link', mode === 'light' ? pal[600] : pal[400])
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', surf.s)
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

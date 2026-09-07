@@ -11,17 +11,17 @@ export function WordPage() {
 
   if (!word) {
     return (
-      <main className="page">
-        <BackLink to="/course/awl" label="AWL" />
+      <div className="page">
+        <BackLink to="/course" label="課程" />
         <p>找不到這個詞。</p>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="page">
+    <div className="page">
       <BackLink to={`/course/awl/sublist/${word.sublist}`} label={`Sublist ${word.sublist}`} />
       <WordBody word={word} speech={progress.settings.speech} />
-    </main>
+    </div>
   )
 }

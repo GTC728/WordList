@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ProgressBar } from '../components/ui'
-import { courseMeta, getSublistWords, totalLessons } from '../data/course'
+import { Fold, SourceFold } from '../components/Fold'
+import { Icon } from '../components/Icon'
+import { ModeCard } from '../components/ModeCard'
+import { totalLessons } from '../data/meta'
 import { getBackupStatus, hasLearnedSomething } from '../lib/persist'
 import { dueCards } from '../lib/progress'
 import { useProgress } from '../lib/ProgressContext'
+import { isCloudBound } from '../lib/sync'
 
 type InstallEvent = Event & { prompt: () => Promise<void> }
 
@@ -13,17 +16,28 @@ export function HomePage() {
   const due = dueCards(progress).length
   const done = progress.completedLessons.length
   const lessons = totalLessons()
+  const practiceGames = Object.values(progress.bank).reduce((sum, scope) => sum + (scope.gameIndex ?? 0), 0)
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null)
   const [needsBackup, setNeedsBackup] = useState(false)
 
   useEffect(() => {
-    if (!hasLearnedSomething(progress)) {
-      setNeedsBackup(false)
-      return
+    function refresh() {
+      if (!hasLearnedSomething(progress)) {
+        setNeedsBackup(false)
+        return
+      }
+      void getBackupStatus().then((status) => {
+        const synced = isCloudBound()
+        setNeedsBackup(!synced && !status.fileBound && !status.lastExportAt)
+      })
     }
-    void getBackupStatus().then((status) => {
-      setNeedsBackup(!status.fileBound && !status.lastExportAt)
-    })
+    refresh()
+    window.addEventListener('wordlist-sync-meta', refresh)
+    window.addEventListener('wordlist-auth', refresh)
+    return () => {
+      window.removeEventListener('wordlist-sync-meta', refresh)
+      window.removeEventListener('wordlist-auth', refresh)
+    }
   }, [progress])
 
   useEffect(() => {
@@ -36,77 +50,53 @@ export function HomePage() {
   }, [])
 
   return (
-    <main className="page">
-      <header className="hero-block">
-        <p className="eyebrow">課程</p>
-        <h1>學術英文單字</h1>
-        <p className="lede">Coxhead Academic Word List · 依出現頻率分成十層。</p>
-      </header>
-
-      <section className="ui-metric-hero">
-        <article>
-          <span>課程</span>
-          <strong>
-            {done}/{lessons}
-          </strong>
-        </article>
-        <article>
-          <span>到期複習</span>
-          <strong>{due}</strong>
-        </article>
-        <article>
-          <span>詞族</span>
-          <strong>{courseMeta.headwordCount}</strong>
-        </article>
-      </section>
-
-      {due > 0 && (
-        <Link className="banner ui-pressable" to="/review">
-          有 {due} 個詞到期複習
-        </Link>
-      )}
-
+    <div className="page">
       {needsBackup && (
-        <Link className="banner backup-hint ui-pressable" to="/settings">
-          進度還只在這個瀏覽器裡，去設定同步或備份
+        <Link className="banner backup-hint ui-pressable banner-icon" to="/settings" aria-label="備份">
+          <Icon name="warning" />
+          備份
         </Link>
       )}
 
       {installEvent && (
         <button
           type="button"
-          className="primary"
+          className="primary banner-icon"
           onClick={async () => {
             await installEvent.prompt()
             setInstallEvent(null)
           }}
         >
-          加到主畫面
+          <Icon name="plus" />
+          安裝
         </button>
       )}
 
-      <p className="section-label">Sublist</p>
-      <div className="ui-grouped-section">
-        {courseMeta.sublists.map((item) => {
-          const words = getSublistWords(item.n)
-          const finished = words.length
-            ? progress.completedLessons.filter((id) => id.startsWith(`awl-${item.n}-`)).length
-            : 0
-          return (
-            <Link key={item.n} className="ui-grouped-row ui-pressable" to={`/course/awl/sublist/${item.n}`}>
-              <div>
-                <strong>Sublist {item.n}</strong>
-                <p className="muted">
-                  {item.wordCount} 詞 · {item.lessonCount} 課
-                </p>
-              </div>
-              <ProgressBar value={finished} max={item.lessonCount} />
-            </Link>
-          )
-        })}
+      <div className="mode-grid">
+        <ModeCard
+          to="/course"
+          icon="book"
+          title="課程"
+          stat={`${done}/${lessons}`}
+          badge={due > 0 ? due : undefined}
+        />
+        <ModeCard
+          to="/practice"
+          icon="cards"
+          title="練習"
+          stat={practiceGames ? String(practiceGames) : undefined}
+        />
+        <ModeCard to="/endless" icon="infinity" title="無盡" />
       </div>
 
-      <p className="footnote">詞表來源：{courseMeta.attribution}。釋義與例句為本應用自行撰寫。</p>
-    </main>
+      <Fold label="規則">
+        <ul className="rules">
+          <li>課程：十詞一課，上完才開下一課。</li>
+          <li>練習：答對的題五局內不再出。</li>
+          <li>無盡：答對繼續，答錯結束。</li>
+        </ul>
+      </Fold>
+      <SourceFold />
+    </div>
   )
 }

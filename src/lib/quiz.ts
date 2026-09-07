@@ -1,4 +1,5 @@
-import type { Collocation, MatchQuestion, McqQuestion, Question, WordCard } from '../types'
+import type { Collocation, MatchQuestion, McqQuestion, Question, TypeQuestion, WordCard } from '../types'
+import { canSpellWord, isNewWord } from './hits'
 import { escapeRegExp, pickN, shuffle } from './shuffle'
 
 const LESSON_LENGTH = 12
@@ -143,11 +144,48 @@ function collocationQuestion(words: WordCard[]): MatchQuestion | null {
   }
 }
 
-export function buildLessonQuestions(words: WordCard[]): Question[] {
+function spellQuestion(word: WordCard, from: 'zh' | 'en' = 'zh'): TypeQuestion {
+  return {
+    type: 'spell',
+    wordId: word.id,
+    blockId: `${word.id}:spell:${from === 'zh' ? 0 : 1}`,
+    prompt: from === 'zh' ? word.glossZh : word.glossEn,
+    hint: from === 'zh' ? '打出英文拼法' : '看英文釋義，打出拼法',
+    answer: word.headword,
+  }
+}
+
+export function answersMatch(input: string, answer: string): boolean {
+  const norm = (value: string) => value.trim().replace(/\s+/g, ' ').toLowerCase()
+  const typed = norm(input)
+  const target = norm(answer)
+  if (typed === target) return true
+  const swapped = target.endsWith('yse')
+    ? `${target.slice(0, -3)}yze`
+    : target.endsWith('yze')
+      ? `${target.slice(0, -3)}yse`
+      : null
+  return swapped !== null && typed === swapped
+}
+
+export function buildLessonQuestions(
+  words: WordCard[],
+  wordHits: Record<string, number> = {},
+): Question[] {
   if (words.length === 0) return []
-  const order = shuffle(words)
   const questions: Question[] = []
   const used = new Set<string>()
+  const unseen = shuffle(words.filter((word) => isNewWord(word.id, wordHits)))
+
+  for (const word of unseen) {
+    if (questions.length >= LESSON_LENGTH) break
+    questions.push(meaningQuestion(word, words))
+    used.add(`meaning-${word.id}`)
+  }
+  const prefix = questions.length
+
+  const order = shuffle(words)
+  const room = () => LESSON_LENGTH - questions.length
 
   const take = (
     count: number,
@@ -156,7 +194,7 @@ export function buildLessonQuestions(words: WordCard[]): Question[] {
   ) => {
     let added = 0
     for (const word of order) {
-      if (questions.length >= LESSON_LENGTH) break
+      if (added >= count || room() <= 0) break
       const key = `${kind}-${word.id}`
       if (used.has(key)) continue
       const question = make(word)
@@ -164,34 +202,47 @@ export function buildLessonQuestions(words: WordCard[]): Question[] {
       questions.push(question)
       used.add(key)
       added += 1
-      if (added >= count) break
     }
   }
 
-  take(3, 'meaning', (word) => meaningQuestion(word, words))
   take(3, 'form', (word) => formQuestion(word, words))
   take(3, 'cloze', (word) => clozeQuestion(word, words))
   take(2, 'family', (word) => familyQuestion(word, words))
+  take(2, 'spell', (word) => (canSpellWord(word.id, wordHits) ? spellQuestion(word) : null))
 
   const matching = collocationQuestion(words)
-  if (matching && questions.length < LESSON_LENGTH) {
+  if (matching && room() > 0) {
     questions.push(matching)
   }
 
   for (const word of order) {
-    if (questions.length >= LESSON_LENGTH) break
+    if (room() <= 0) break
+    const key = `meaning-${word.id}`
+    if (used.has(key)) continue
     questions.push(meaningQuestion(word, words))
+    used.add(key)
   }
 
-  return shuffle(questions).slice(0, LESSON_LENGTH)
+  const head = questions.slice(0, prefix)
+  const tail = shuffle(questions.slice(prefix))
+  return [...head, ...tail].slice(0, LESSON_LENGTH)
 }
 
-export function buildReviewQuestions(words: WordCard[]): Question[] {
+export function buildReviewQuestions(
+  words: WordCard[],
+  wordHits: Record<string, number> = {},
+): Question[] {
   const unique = [...new Map(words.map((word) => [word.id, word])).values()]
   const subset = pickN(unique, Math.min(8, unique.length))
   const questions: Question[] = []
   for (const word of subset) {
-    questions.push(meaningQuestion(word, unique))
+    if (isNewWord(word.id, wordHits)) {
+      questions.push(meaningQuestion(word, unique))
+    } else if (canSpellWord(word.id, wordHits) && questions.length % 2 === 1) {
+      questions.push(spellQuestion(word))
+    } else {
+      questions.push(meaningQuestion(word, unique))
+    }
     if (questions.length >= 8) break
     questions.push(clozeQuestion(word, unique))
     if (questions.length >= 8) break
@@ -208,6 +259,10 @@ export function isMatchQuestion(
   question: Question,
 ): question is Extract<Question, { pairs: unknown }> {
   return question.type === 'collocation' || question.type === 'synonym' || question.type === 'native'
+}
+
+export function isTypeQuestion(question: Question): question is TypeQuestion {
+  return question.type === 'spell'
 }
 
 export function questionBlockIds(question: Question): string[] {

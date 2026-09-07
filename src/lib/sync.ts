@@ -1,13 +1,17 @@
+import { captureAuthRedirect, getAccessToken, readAuth } from './auth'
+import { cloudRpc } from './cloud'
 import type { ProgressEnvelope } from './persist'
 import { persistEnvelope, pickNewest, readLocalEnvelope, toEnvelope } from './persist'
 import { normalizeProgress } from './progress'
 
-const META_KEY = 'wordlist.sync.v1'
-const NS = 'wordlist-pwa'
-const BASE = `https://mantledb.sh/v2/${NS}`
+const META_KEY = 'wordlist.sync.v2'
 const PUSH_WAIT_MS = 1600
-const CHUNK = 24000
 const ALPHABET = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'
+
+type RemoteRow = {
+  blob?: string
+  saved_at?: number
+}
 
 export type SyncMeta = {
   code: string | null
@@ -44,6 +48,10 @@ function writeSyncMeta(meta: SyncMeta): void {
   window.dispatchEvent(new CustomEvent('wordlist-sync-meta', { detail: meta }))
 }
 
+export function isCloudBound(): boolean {
+  return Boolean(readAuth() || readSyncMeta().code)
+}
+
 function bytesToB64(bytes: Uint8Array): string {
   let binary = ''
   bytes.forEach((byte) => {
@@ -63,33 +71,20 @@ function toAb(bytes: Uint8Array): ArrayBuffer {
   return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer
 }
 
-async function pipeBytes(bytes: Uint8Array, stream: CompressionStream | DecompressionStream): Promise<Uint8Array> {
-  const writer = stream.writable.getWriter()
-  await writer.write(toAb(bytes))
-  await writer.close()
-  const chunks: Uint8Array[] = []
-  const reader = stream.readable.getReader()
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    if (value) chunks.push(value)
-  }
-  const total = chunks.reduce((sum, chunk) => sum + chunk.length, 0)
-  const out = new Uint8Array(total)
-  let offset = 0
-  for (const chunk of chunks) {
-    out.set(chunk, offset)
-    offset += chunk.length
-  }
-  return out
+async function transformBytes(
+  bytes: Uint8Array,
+  stream: CompressionStream | DecompressionStream,
+): Promise<Uint8Array> {
+  const output = new Blob([toAb(bytes)]).stream().pipeThrough(stream)
+  return new Uint8Array(await new Response(output).arrayBuffer())
 }
 
 async function gzipBytes(bytes: Uint8Array): Promise<Uint8Array> {
-  return pipeBytes(bytes, new CompressionStream('gzip'))
+  return transformBytes(bytes, new CompressionStream('gzip'))
 }
 
 async function gunzipBytes(bytes: Uint8Array): Promise<Uint8Array> {
-  return pipeBytes(bytes, new DecompressionStream('gzip'))
+  return transformBytes(bytes, new DecompressionStream('gzip'))
 }
 
 async function codeKey(code: string): Promise<CryptoKey> {
@@ -129,20 +124,26 @@ async function unpackEnvelope(raw: string, code: string): Promise<ProgressEnvelo
   }
 }
 
-async function mantleGet(path: string): Promise<unknown | null> {
-  const response = await fetch(`${BASE}/${path}`)
-  if (response.status === 404) return null
-  if (!response.ok) throw new Error('讀不到雲端紀錄')
-  return response.json()
+async function packAccount(envelope: ProgressEnvelope): Promise<string> {
+  const zipped = await gzipBytes(new TextEncoder().encode(JSON.stringify(envelope)))
+  return JSON.stringify({
+    app: 'wordlist-account',
+    version: 1,
+    data: bytesToB64(zipped),
+  })
 }
 
-async function mantlePost(path: string, body: unknown): Promise<void> {
-  const response = await fetch(`${BASE}/${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(body),
-  })
-  if (!response.ok) throw new Error('寫不進雲端，請稍後再試')
+async function unpackAccount(raw: string): Promise<ProgressEnvelope | null> {
+  try {
+    const payload = JSON.parse(raw) as { app?: string; data?: string }
+    if (payload.app !== 'wordlist-account' || !payload.data) return null
+    const json = new TextDecoder().decode(await gunzipBytes(b64ToBytes(payload.data)))
+    const parsed = JSON.parse(json) as ProgressEnvelope
+    if (!parsed?.progress) return null
+    return { app: 'wordlist', version: 1, savedAt: parsed.savedAt, progress: normalizeProgress(parsed.progress) }
+  } catch {
+    return null
+  }
 }
 
 function makeCode(): string {
@@ -164,32 +165,61 @@ function emitProgress(envelope: ProgressEnvelope): void {
   window.dispatchEvent(new CustomEvent('wordlist-remote-progress', { detail: envelope }))
 }
 
-async function getRemote(code: string): Promise<ProgressEnvelope | null> {
-  const head = (await mantleGet(`${code}/head`)) as { n?: number } | null
-  if (!head || typeof head.n !== 'number') return null
-  let packed = ''
-  for (let i = 0; i < head.n; i += 1) {
-    const part = (await mantleGet(`${code}/${i}`)) as { c?: string } | null
-    if (!part?.c) throw new Error('雲端紀錄不完整')
-    packed += part.c
-  }
-  return unpackEnvelope(packed, code)
+function firstRow(rows: RemoteRow[] | RemoteRow | null): RemoteRow | null {
+  if (!rows) return null
+  return Array.isArray(rows) ? (rows[0] ?? null) : rows
 }
 
-async function putRemote(code: string, envelope: ProgressEnvelope): Promise<void> {
-  const packed = await packEnvelope(envelope, code)
-  const parts = Math.max(1, Math.ceil(packed.length / CHUNK))
-  await mantlePost(`${code}/head`, { n: parts, savedAt: envelope.savedAt })
-  for (let i = 0; i < parts; i += 1) {
-    await mantlePost(`${code}/${i}`, { c: packed.slice(i * CHUNK, (i + 1) * CHUNK) })
-  }
+async function getRemoteCode(code: string): Promise<ProgressEnvelope | null> {
+  const row = firstRow(await cloudRpc<RemoteRow[] | RemoteRow | null>('wordlist_get_sync', { p_code: code }))
+  if (!row?.blob) return null
+  const envelope = await unpackEnvelope(row.blob, code)
+  if (!envelope) throw new Error('雲端紀錄無法讀取')
+  return envelope
+}
+
+async function putRemoteCode(code: string, envelope: ProgressEnvelope): Promise<void> {
+  await cloudRpc<boolean>('wordlist_put_sync', {
+    p_code: code,
+    p_blob: await packEnvelope(envelope, code),
+    p_saved_at: envelope.savedAt,
+  })
+}
+
+async function getRemoteAccount(token: string): Promise<ProgressEnvelope | null> {
+  const row = firstRow(await cloudRpc<RemoteRow[] | RemoteRow | null>('wordlist_get_account', {}, token))
+  if (!row?.blob) return null
+  return unpackAccount(row.blob)
+}
+
+async function putRemoteAccount(token: string, envelope: ProgressEnvelope): Promise<void> {
+  await cloudRpc<boolean>(
+    'wordlist_put_account',
+    {
+      p_blob: await packAccount(envelope),
+      p_saved_at: envelope.savedAt,
+    },
+    token,
+  )
+}
+
+async function mergeAndStore(remote: ProgressEnvelope | null): Promise<ProgressEnvelope> {
+  const local = readLocalEnvelope()
+  const winner = pickNewest(local, remote) ?? remote ?? local ?? toEnvelope(normalizeProgress(null))
+  const stamped = { ...winner, savedAt: Date.now() }
+  await persistEnvelope(stamped)
+  emitProgress(stamped)
+  return stamped
 }
 
 export async function pullRemote(): Promise<ProgressEnvelope | null> {
+  const token = await getAccessToken()
   const meta = readSyncMeta()
-  if (!meta.code) return null
   try {
-    const remote = await getRemote(meta.code)
+    let remote: ProgressEnvelope | null = null
+    if (token) remote = await getRemoteAccount(token)
+    else if (meta.code) remote = await getRemoteCode(meta.code)
+    else return null
     writeSyncMeta({ ...readSyncMeta(), lastPullAt: Date.now(), lastError: null })
     if (!remote) return null
     const local = readLocalEnvelope()
@@ -208,12 +238,15 @@ export async function pullRemote(): Promise<ProgressEnvelope | null> {
 }
 
 export async function pushRemote(): Promise<void> {
-  const meta = readSyncMeta()
   const envelope = readLocalEnvelope()
-  if (!meta.code || !envelope || pushing) return
+  if (!envelope || pushing) return
+  const token = await getAccessToken()
+  const meta = readSyncMeta()
+  if (!token && !meta.code) return
   pushing = true
   try {
-    await putRemote(meta.code, envelope)
+    if (token) await putRemoteAccount(token, envelope)
+    else if (meta.code) await putRemoteCode(meta.code, envelope)
     writeSyncMeta({ ...readSyncMeta(), lastPushAt: Date.now(), lastError: null })
   } catch (error) {
     writeSyncMeta({
@@ -226,17 +259,32 @@ export async function pushRemote(): Promise<void> {
 }
 
 export function queueRemotePush(): void {
-  if (!readSyncMeta().code) return
+  if (!isCloudBound()) return
   if (pushTimer) window.clearTimeout(pushTimer)
   pushTimer = window.setTimeout(() => {
     void pushRemote()
   }, PUSH_WAIT_MS)
 }
 
+export async function bindAccountSync(): Promise<ProgressEnvelope> {
+  const token = await getAccessToken()
+  if (!token) throw new Error('請先登入')
+  const remote = await getRemoteAccount(token)
+  const stamped = await mergeAndStore(remote)
+  writeSyncMeta({
+    ...readSyncMeta(),
+    lastPullAt: Date.now(),
+    lastPushAt: Date.now(),
+    lastError: null,
+  })
+  await putRemoteAccount(token, stamped)
+  return stamped
+}
+
 export async function createSyncCode(): Promise<string> {
   const envelope = readLocalEnvelope() ?? toEnvelope(normalizeProgress(null))
   const code = makeCode()
-  await putRemote(code, envelope)
+  await putRemoteCode(code, envelope)
   writeSyncMeta({
     code,
     lastPullAt: Date.now(),
@@ -248,20 +296,16 @@ export async function createSyncCode(): Promise<string> {
 
 export async function joinSyncCode(raw: string): Promise<ProgressEnvelope> {
   const code = normalizeJoinCode(raw)
-  if (code.length < 6) throw new Error('同步碼太短')
-  const remote = await getRemote(code)
+  if (code.length !== 8) throw new Error('同步碼須為八碼')
+  const remote = await getRemoteCode(code)
   if (!remote) throw new Error('找不到這個同步碼')
-  const local = readLocalEnvelope()
-  const winner = pickNewest(local, remote) ?? remote
-  const stamped = { ...winner, savedAt: Date.now() }
-  await persistEnvelope(stamped)
+  const stamped = await mergeAndStore(remote)
   writeSyncMeta({
     code,
     lastPullAt: Date.now(),
     lastPushAt: Date.now(),
     lastError: null,
   })
-  emitProgress(stamped)
   void pushRemote()
   return stamped
 }
@@ -275,14 +319,25 @@ export function startSyncLoop(): () => void {
   const onVisible = () => {
     if (document.visibilityState === 'visible') void pullRemote()
   }
+  const onAuth = () => {
+    if (readAuth()) void pullRemote()
+  }
   window.addEventListener('wordlist-persisted', onPersist)
+  window.addEventListener('wordlist-auth', onAuth)
   document.addEventListener('visibilitychange', onVisible)
-  void pullRemote()
+  void (async () => {
+    const fromLink =
+      /access_token=/.test(window.location.hash) || new URLSearchParams(window.location.search).has('code')
+    await captureAuthRedirect()
+    if (fromLink && readAuth()) await bindAccountSync().catch(() => void pullRemote())
+    else await pullRemote()
+  })()
   const timer = window.setInterval(() => {
     if (document.visibilityState === 'visible' && navigator.onLine) void pullRemote()
   }, 25000)
   return () => {
     window.removeEventListener('wordlist-persisted', onPersist)
+    window.removeEventListener('wordlist-auth', onAuth)
     document.removeEventListener('visibilitychange', onVisible)
     window.clearInterval(timer)
     if (pushTimer) window.clearTimeout(pushTimer)

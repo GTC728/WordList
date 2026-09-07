@@ -1,7 +1,27 @@
 import type { AccentPreset, BankScopeState, FullRunState, ProgressState, SrsCard, ThemeMode } from '../types'
-import { applyBlockResult } from './bank/scheduler'
+import { applyBlockResult } from './bank/result'
+import { hitsFromBank, wordIdFromBlockId } from './bank/tallies'
 import { persistEnvelope, readLocalEnvelope, toEnvelope } from './persist'
 import { createSrs, isDue, reviewSrs } from './srs'
+
+function asStars(value: unknown): Record<string, number> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+  const next: Record<string, number> = {}
+  for (const [id, stamp] of Object.entries(value as Record<string, unknown>)) {
+    if (typeof stamp === 'number' && stamp > 0) next[id] = stamp
+    else if (stamp === true) next[id] = Date.now()
+  }
+  return next
+}
+
+function asHits(value: unknown): Record<string, number> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+  const next: Record<string, number> = {}
+  for (const [id, count] of Object.entries(value as Record<string, unknown>)) {
+    if (typeof count === 'number' && count > 0) next[id] = Math.floor(count)
+  }
+  return next
+}
 
 export function emptyProgress(): ProgressState {
   return {
@@ -10,6 +30,8 @@ export function emptyProgress(): ProgressState {
     srs: {},
     bank: {},
     full: {},
+    stars: {},
+    wordHits: {},
     settings: { speech: true, theme: 'dark', accent: 'green' },
   }
 }
@@ -30,6 +52,12 @@ export function normalizeProgress(parsed: Partial<ProgressState> | null | undefi
     srs: parsed?.srs ?? {},
     bank: parsed?.bank ?? {},
     full: parsed?.full ?? {},
+    stars: asStars(parsed?.stars),
+    wordHits: (() => {
+      const stored = asHits(parsed?.wordHits)
+      if (Object.keys(stored).length > 0) return stored
+      return hitsFromBank(parsed?.bank)
+    })(),
   }
 }
 
@@ -53,12 +81,22 @@ export function resetProgress(): ProgressState {
   return next
 }
 
+function bumpWordHits(hits: Record<string, number>, wordIds: string[]): Record<string, number> {
+  const next = { ...hits }
+  for (const id of wordIds) {
+    if (!id) continue
+    next[id] = (next[id] ?? 0) + 1
+  }
+  return next
+}
+
 export function completeLesson(
   state: ProgressState,
   lessonKey: string,
   correct: number,
   total: number,
   wordResults: { wordId: string; correct: boolean }[],
+  hitWordIds?: string[],
 ): ProgressState {
   const srs = { ...state.srs }
   for (const result of wordResults) {
@@ -78,6 +116,10 @@ export function completeLesson(
       [lessonKey]: { correct, total, at: Date.now() },
     },
     srs,
+    wordHits: bumpWordHits(
+      state.wordHits ?? {},
+      hitWordIds ?? wordResults.map((item) => item.wordId),
+    ),
   }
   saveProgress(next)
   return next
@@ -98,13 +140,21 @@ export function addToReview(state: ProgressState, wordIds: string[]): ProgressSt
 export function applyReview(
   state: ProgressState,
   wordResults: { wordId: string; correct: boolean }[],
+  hitWordIds?: string[],
 ): ProgressState {
   const srs = { ...state.srs }
   for (const result of wordResults) {
     const current = srs[result.wordId] ?? createSrs(result.wordId)
     srs[result.wordId] = reviewSrs(current, result.correct)
   }
-  const next = { ...state, srs }
+  const next = {
+    ...state,
+    srs,
+    wordHits: bumpWordHits(
+      state.wordHits ?? {},
+      hitWordIds ?? wordResults.map((item) => item.wordId),
+    ),
+  }
   saveProgress(next)
   return next
 }
@@ -193,6 +243,10 @@ export function applyBankGame(
         stats,
       },
     },
+    wordHits: bumpWordHits(
+      state.wordHits ?? {},
+      results.map((item) => wordIdFromBlockId(item.blockId)),
+    ),
   }
   saveProgress(next)
   return next
@@ -209,4 +263,19 @@ export function isLessonUnlocked(
 ): boolean {
   if (lessonIndex <= 0) return true
   return completedLessons.includes(`awl-${sublist}-${lessonIndex - 1}`)
+}
+
+export function toggleStars(state: ProgressState, blockIds: string[]): ProgressState {
+  const unique = [...new Set(blockIds.filter(Boolean))]
+  if (unique.length === 0) return state
+  const stars = { ...(state.stars ?? {}) }
+  const allOn = unique.every((id) => Boolean(stars[id]))
+  const now = Date.now()
+  for (const id of unique) {
+    if (allOn) delete stars[id]
+    else stars[id] = stars[id] ?? now
+  }
+  const next = { ...state, stars }
+  saveProgress(next)
+  return next
 }

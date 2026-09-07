@@ -1,6 +1,8 @@
 import { matchPrompt } from '../quiz'
 import { pickN } from '../shuffle'
-import { blocksForPile, materializeMcq } from './blocks'
+import { blocksForPile, materializeMcq, materializeSpell, nativeMeaningQuestion } from './blocks'
+import { canSpellWord, isNewWord } from '../hits'
+import { LEECH_STREAK } from './result'
 import type {
   BankQuestionType,
   BlockStat,
@@ -11,9 +13,7 @@ import type {
 } from '../../types'
 
 export const GAME_SIZE = 12
-const COOLDOWN_AFTER_CORRECT = 5
-const MISS_GAP = 1
-const LEECH_STREAK = 2
+const NEW_WORD_CAP = 4
 
 const MATCH_TYPES = ['native', 'synonym', 'collocation'] as const
 
@@ -96,26 +96,53 @@ export function drawBankGame(
   words: WordCard[],
   stats: Record<string, BlockStat>,
   gameIndex: number,
+  wordHits: Record<string, number> = {},
 ): Question[] {
   const blocks = blocksForPile(words)
-  const eligible = blocks.filter((block) => isBlockEligible(stats[block.id], gameIndex))
   const used = new Set<string>()
   const questions: Question[] = []
+  const met = new Set<string>()
   let lastWord: string | undefined
 
+  const known = (wordId: string) => !isNewWord(wordId, wordHits) || met.has(wordId)
+
   const remaining = (kind?: QuestionBlock['kind'], type?: BankQuestionType) =>
-    eligible.filter((block) => {
+    blocks.filter((block) => {
       if (used.has(block.id)) return false
+      if (!isBlockEligible(stats[block.id], gameIndex)) return false
       if (kind && block.kind !== kind) return false
       if (type && block.type !== type) return false
+      if (block.type === 'spell' && !canSpellWord(block.wordId, wordHits)) return false
+      if (!known(block.wordId)) return false
       return true
     })
+
+  const takeMeaning = (word: WordCard) => {
+    const question = nativeMeaningQuestion(word, words)
+    if (!question) return false
+    used.add(question.blockId ?? `${word.id}:meaning:0`)
+    met.add(word.id)
+    lastWord = word.id
+    questions.push(question)
+    return true
+  }
 
   const takeMcq = (type?: Extract<BankQuestionType, 'meaning' | 'form' | 'cloze' | 'family'>) => {
     const pool = remaining('mcq', type)
     const block = pickWeighted(pool, stats, gameIndex, lastWord)
     if (!block) return
     const question = materializeMcq(block, words)
+    if (!question) return
+    used.add(block.id)
+    lastWord = block.wordId
+    questions.push(question)
+  }
+
+  const takeSpell = () => {
+    const pool = remaining('type', 'spell')
+    const block = pickWeighted(pool, stats, gameIndex, lastWord)
+    if (!block) return
+    const question = materializeSpell(block)
     if (!question) return
     used.add(block.id)
     lastWord = block.wordId
@@ -141,47 +168,39 @@ export function drawBankGame(
     lastWord = undefined
   }
 
+  const fresh = words.filter((word) => isNewWord(word.id, wordHits))
+  const welcome = pickN(fresh, Math.min(NEW_WORD_CAP, fresh.length))
+  for (const word of welcome) {
+    if (questions.length >= GAME_SIZE) break
+    takeMeaning(word)
+  }
+
   takeBoard('native')
   takeMcq('meaning')
   takeMcq('form')
   takeBoard('synonym')
   takeMcq('cloze')
   takeMcq('family')
+  takeSpell()
   takeBoard('collocation')
   takeMcq('meaning')
   takeMcq('form')
   takeMcq('cloze')
+  takeSpell()
   takeMcq()
   takeMcq()
 
   while (questions.length < GAME_SIZE) {
     const before = questions.length
+    const leftover = fresh.filter((word) => !met.has(word.id))
+    if (leftover.length > 0 && questions.length < GAME_SIZE) {
+      takeMeaning(leftover[0]!)
+      if (questions.length > before) continue
+    }
     takeMcq()
+    takeSpell()
     if (questions.length === before) break
   }
 
   return questions.slice(0, GAME_SIZE)
-}
-
-export function nextDueGame(gameIndex: number, correct: boolean, consecutiveWrong: number): number {
-  if (correct) return gameIndex + 1 + COOLDOWN_AFTER_CORRECT
-  if (consecutiveWrong >= LEECH_STREAK) return gameIndex + 1
-  return gameIndex + 1 + MISS_GAP
-}
-
-export function applyBlockResult(
-  stats: Record<string, BlockStat>,
-  blockId: string,
-  gameIndex: number,
-  correct: boolean,
-): BlockStat {
-  const prev = stats[blockId]
-  const consecutiveWrong = correct ? 0 : (prev?.consecutiveWrong ?? 0) + 1
-  return {
-    lastGame: gameIndex,
-    lastCorrect: correct,
-    consecutiveWrong,
-    seen: (prev?.seen ?? 0) + 1,
-    dueGame: nextDueGame(gameIndex, correct, consecutiveWrong),
-  }
 }

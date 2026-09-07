@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Fold } from '../components/Fold'
+import { ArtBlock } from '../components/ModeCard'
 import { QuizSession, ResultList, type ItemResult } from '../components/QuizSession'
 import { BackLink } from '../components/ui'
 import { describeScope, getScopeWords } from '../data/course'
@@ -22,7 +24,7 @@ export function BankPlayPage() {
   const [summary, setSummary] = useState<{ correct: number; total: number } | null>(null)
 
   const questions = useMemo(
-    () => (started ? drawBankGame(words, stats ?? {}, gameIndex) : []),
+    () => (started ? drawBankGame(words, stats ?? {}, gameIndex, progress.wordHits) : []),
     [started, seed, words, gameIndex, stats],
   )
 
@@ -44,22 +46,20 @@ export function BankPlayPage() {
 
   if (words.length === 0) {
     return (
-      <main className="page">
-        <BackLink to="/bank" label="題庫" />
+      <div className="page">
+        <BackLink to="/practice" label="練習" />
         <p>找不到這一堆詞。</p>
-      </main>
+      </div>
     )
   }
 
   if (summary) {
     return (
-      <main className="page">
+      <div className="page">
         <BackLink to={meta.backTo} label="返回" />
-        <h1>這一局結束</h1>
         <p className="metric-lg">
           {summary.correct}/{summary.total}
         </p>
-        <p className="lede">對的題塊會冷卻 5 局；錯的會隔一局再出。連錯兩次則下一局再練。</p>
         <button
           type="button"
           className="primary"
@@ -69,62 +69,60 @@ export function BankPlayPage() {
             setSeed((value) => value + 1)
           }}
         >
-          再來一局
+          再來
         </button>
         <Link className="primary ghost" to={meta.backTo}>
-          離開題庫
+          練習
         </Link>
         <ResultList words={words} speech={speech} />
-      </main>
+      </div>
     )
   }
 
   if (!started) {
     return (
-      <main className="page">
+      <div className="page">
         <BackLink to={meta.backTo} label="返回" />
-        <p className="kicker">題庫模式</p>
-        <h1>{meta.title}</h1>
-        <p className="lede">
-          {meta.detail} 題塊 {bankSize} 條，已打過 {gameIndex} 局。
-        </p>
-        <ul className="rules">
-          <li>一條題塊 = 題型 + 所屬單詞 + 固定題面（填空句、配對邊、選項來源）。</li>
-          <li>同一詞各題型最多 5 條；這一局從整堆裡隨機抽，並避開剛對過的。</li>
-          <li>答對：5 局內不再出同一題塊。</li>
-          <li>答錯：隔一局再出（下下次）。連錯兩次則下一局必出。</li>
-          <li>沒見過的題塊優先登場，同一詞盡量不連著出。</li>
-        </ul>
+        <ArtBlock icon="cards" />
+        <h1 className="lobby-title">{meta.title}</h1>
+        {gameIndex ? <p className="mode-stat">{gameIndex}</p> : null}
         <button type="button" className="primary" onClick={() => setStarted(true)}>
-          開始一局
+          開始
         </button>
-      </main>
+        <Fold label="規則">
+          <ul className="rules">
+            <li>題塊 {bankSize} 條。答對冷卻 5 局，答錯隔一局。</li>
+            <li>連錯兩次則下一局再出。</li>
+            <li>新詞先看單詞。同一詞做過五次才出拼字。</li>
+          </ul>
+        </Fold>
+      </div>
     )
   }
 
   if (questions.length === 0) {
     return (
-      <main className="page">
+      <div className="page">
         <BackLink to={meta.backTo} label="返回" />
-        <h1>這一堆暫時抽不到題</h1>
-        <p className="lede">剛對過的題塊還在冷卻。稍後再練，或換另一堆詞。</p>
+        <p className="muted">冷卻中</p>
         <button type="button" className="primary" onClick={() => setSeed((value) => value + 1)}>
-          再試一次
+          再試
         </button>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="page">
+    <div className="page">
       <BackLink to={meta.backTo} label="離開" />
-      <p className="kicker">第 {gameIndex + 1} 局</p>
+      <p className="kicker">{gameIndex + 1}</p>
       <QuizSession
         key={`${id}-${seed}-${gameIndex}`}
         questions={questions}
         speech={speech}
+        wordHits={progress.wordHits}
         onFinished={onFinished}
       />
-    </main>
+    </div>
   )
 }

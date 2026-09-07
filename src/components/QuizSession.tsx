@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { MatchBoard } from './MatchBoard'
 import { ProgressBar, SpeakButton } from './ui'
+import { SpellForm } from './SpellForm'
+import { StarButton } from './StarButton'
 import { WordBody } from './WordBody'
+import { WordIntro } from './WordIntro'
 import { getWord } from '../data/course'
-import { isMatchQuestion, questionWordIds } from '../lib/quiz'
+import { isNewWord } from '../lib/hits'
+import { answersMatch, isMatchQuestion, isTypeQuestion, questionBlockIds, questionWordIds } from '../lib/quiz'
 import type { Question, WordCard } from '../types'
 
 export type ItemResult = { question: Question; correct: boolean }
@@ -12,18 +16,29 @@ export function QuizSession({
   questions,
   speech,
   onFinished,
+  wordHits = {},
 }: {
   questions: Question[]
   speech: boolean
   onFinished: (results: ItemResult[]) => void
+  wordHits?: Record<string, number>
 }) {
   const [index, setIndex] = useState(0)
   const [results, setResults] = useState<ItemResult[]>([])
   const [picked, setPicked] = useState<string | null>(null)
+  const [seenIntro, setSeenIntro] = useState<string[]>([])
   const question = questions[index]
   const answered = results.length > index
 
   if (!question) return <p>沒有題目。</p>
+
+  const introId =
+    !isMatchQuestion(question) &&
+    isNewWord(question.wordId, wordHits) &&
+    !seenIntro.includes(question.wordId)
+      ? question.wordId
+      : null
+  const introWord = introId ? getWord(introId) : undefined
 
   function commit(correct: boolean) {
     if (answered) return
@@ -51,13 +66,35 @@ export function QuizSession({
         </span>
       </div>
 
-      {isMatchQuestion(question) ? (
+      {introWord ? (
+        <WordIntro
+          word={introWord}
+          speech={speech}
+          onContinue={() => {
+            setSeenIntro((current) =>
+              current.includes(introWord.id) ? current : [...current, introWord.id],
+            )
+          }}
+        />
+      ) : isMatchQuestion(question) ? (
         <>
           <p className="hint">{question.prompt}</p>
           <MatchBoard
             pairs={question.pairs}
             disabled={answered}
             onDone={(perfect) => commit(perfect)}
+          />
+        </>
+      ) : isTypeQuestion(question) ? (
+        <>
+          <p className="hint">{question.hint}</p>
+          <div className="prompt-row">
+            <h2 className="prompt">{question.prompt}</h2>
+          </div>
+          <SpellForm
+            key={index}
+            disabled={answered}
+            onSubmit={(value) => commit(answersMatch(value, question.answer))}
           />
         </>
       ) : (
@@ -96,18 +133,10 @@ export function QuizSession({
         </>
       )}
 
-      {showFeedback && last && (
+      {!introWord && showFeedback && last && (
         <section className={`feedback ${last.correct ? 'ok' : 'bad'}`}>
           {isMatchQuestion(question) ? (
-            <p>
-              {last.correct
-                ? '全對'
-                : question.type === 'synonym'
-                  ? '有配錯，已記下這組同義詞'
-                  : question.type === 'native'
-                    ? '有配錯，已記下這組中英對'
-                    : '有配錯，已記下這組搭配'}
-            </p>
+            <p>{last.correct ? '全對' : '配錯'}</p>
           ) : (
             <p>{last.correct ? '正確' : `答案：${question.answer}`}</p>
           )}
@@ -115,6 +144,9 @@ export function QuizSession({
             const word = getWord(id)
             return word ? <WordBody key={id} word={word} speech={speech} /> : null
           })}
+          <div className="feedback-tools">
+            <StarButton blockIds={questionBlockIds(question)} />
+          </div>
           <button type="button" className="primary" onClick={next}>
             {index + 1 >= questions.length ? '看結果' : '下一題'}
           </button>

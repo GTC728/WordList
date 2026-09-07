@@ -1,26 +1,38 @@
-import { Link } from 'react-router-dom'
-import { courseMeta, lessonScopeId, sublistScopeId } from '../data/course'
+import { BackLink } from '../components/ui'
+import { Fold } from '../components/Fold'
+import { ModeCard, NumRow } from '../components/ModeCard'
+import { courseMeta, sublistScopeId } from '../data/meta'
+import { useProgress } from '../lib/ProgressContext'
 
 export function BankHubPage() {
+  const { progress } = useProgress()
+  const allGames = progress.bank['awl-all']?.gameIndex ?? 0
+
   return (
-    <main className="page">
-      <p className="eyebrow">題庫</p>
-      <h1>抽題練習</h1>
-      <p className="lede">每詞自己的題塊庫。這一局只在你選的範圍裡抽；對了會冷卻，錯了會重出。</p>
+    <div className="page">
+      <BackLink to="/" label="課程" />
+      <ModeCard to="/practice/awl-all" icon="cards" title="全部" stat={allGames ? String(allGames) : undefined} />
       <div className="ui-grouped-section">
-        {courseMeta.sublists.map((item) => (
-          <div key={item.n} className="ui-grouped-row">
-            <Link to={`/course/awl/sublist/${item.n}`}>
-              <strong>Sublist {item.n}</strong>
-              <p className="muted">{item.wordCount} 詞</p>
-            </Link>
-            <div className="row-actions">
-              <Link to={`/bank/${sublistScopeId(item.n)}`}>整層</Link>
-              <Link to={`/bank/${lessonScopeId(item.n, 0)}`}>第 1 課</Link>
-            </div>
-          </div>
-        ))}
+        {courseMeta.sublists.map((item) => {
+          const games = progress.bank[sublistScopeId(item.n)]?.gameIndex ?? 0
+          return (
+            <NumRow
+              key={item.n}
+              n={item.n}
+              to={`/practice/${sublistScopeId(item.n)}`}
+              label={`Sublist ${item.n}`}
+              trailing={games ? <span className="progress-row-count">{games}</span> : null}
+            />
+          )
+        })}
       </div>
-    </main>
+      <Fold label="規則">
+        <ul className="rules">
+          <li>答對的題五局內不再出。</li>
+          <li>新詞先看單詞，再選中文意思。</li>
+          <li>同一詞做過五次才出拼字。</li>
+        </ul>
+      </Fold>
+    </div>
   )
 }

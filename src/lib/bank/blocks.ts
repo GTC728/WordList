@@ -5,6 +5,7 @@ import type {
   DistractorField,
   McqQuestion,
   QuestionBlock,
+  TypeQuestion,
   WordCard,
 } from '../../types'
 
@@ -55,6 +56,20 @@ function buildForWord(word: WordCard): QuestionBlock[] {
       type,
       wordId: id,
       kind: 'mcq',
+      ...fields,
+    })
+  }
+
+  const typed = (
+    type: BankQuestionType,
+    index: number,
+    fields: Omit<QuestionBlock, 'id' | 'type' | 'wordId' | 'kind'>,
+  ) => {
+    raw.push({
+      id: `${id}:${type}:${index}`,
+      type,
+      wordId: id,
+      kind: 'type',
       ...fields,
     })
   }
@@ -239,6 +254,17 @@ function buildForWord(word: WordCard): QuestionBlock[] {
     pair('native', 4, word.example.blank, word.glossZh)
   }
 
+  typed('spell', 0, {
+    prompt: word.glossZh,
+    hint: '打出英文拼法',
+    answer: word.headword,
+  })
+  typed('spell', 1, {
+    prompt: word.glossEn,
+    hint: '看英文釋義，打出拼法',
+    answer: word.headword,
+  })
+
   const types: BankQuestionType[] = [
     'meaning',
     'form',
@@ -247,6 +273,7 @@ function buildForWord(word: WordCard): QuestionBlock[] {
     'collocation',
     'synonym',
     'native',
+    'spell',
   ]
   return types.flatMap((type) => {
     const group = raw.filter((item) => item.type === type)
@@ -312,4 +339,22 @@ export function materializeMcq(block: QuestionBlock, pile: WordCard[]): McqQuest
     options,
     answer: block.answer,
   }
+}
+
+export function materializeSpell(block: QuestionBlock): TypeQuestion | null {
+  if (block.kind !== 'type' || block.type !== 'spell' || !block.answer || !block.prompt) return null
+  return {
+    type: 'spell',
+    wordId: block.wordId,
+    blockId: block.id,
+    prompt: block.prompt,
+    hint: block.hint,
+    speak: block.speak,
+    answer: block.answer,
+  }
+}
+
+export function nativeMeaningQuestion(word: WordCard, pile: WordCard[]): McqQuestion | null {
+  const block = blocksForWord(word).find((item) => item.id === `${word.id}:meaning:0`)
+  return block ? materializeMcq(block, pile) : null
 }

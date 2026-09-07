@@ -5,7 +5,7 @@ import { BackLink } from '../components/ui'
 import { getWord } from '../data/course'
 import { dueCards } from '../lib/progress'
 import { useProgress } from '../lib/ProgressContext'
-import { buildReviewQuestions } from '../lib/quiz'
+import { buildReviewQuestions, questionWordIds } from '../lib/quiz'
 
 export function ReviewPage() {
   const { progress, review } = useProgress()
@@ -14,47 +14,52 @@ export function ReviewPage() {
     () => due.map((card) => getWord(card.wordId)).filter((word) => word !== undefined),
     [due],
   )
-  const questions = useMemo(() => buildReviewQuestions(words), [words])
+  const questions = useMemo(
+    () => buildReviewQuestions(words, progress.wordHits),
+    [words, progress.wordHits],
+  )
   const [done, setDone] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
   if (due.length === 0 || questions.length === 0) {
     return (
-      <main className="page">
-        <BackLink to="/" label="課程" />
-        <h1>複習</h1>
-        <p className="lede">目前沒有到期的詞。上完一課並答錯幾題後，這裡會出現複習佇列。</p>
-        <Link className="primary" to="/">
-          去上課
+      <div className="page">
+        <BackLink to="/course" label="課程" />
+        <p className="muted">沒有到期</p>
+        <Link className="primary" to="/course">
+          課程
         </Link>
-      </main>
+      </div>
     )
   }
 
   if (done) {
     return (
-      <main className="page">
-        <BackLink to="/" label="課程" />
-        <h1>複習結束</h1>
+      <div className="page">
+        <BackLink to="/course" label="課程" />
         <p className="metric-lg">
           {score.correct}/{score.total}
         </p>
-        <Link className="primary" to="/">
-          回首頁
+        <Link className="primary" to="/course">
+          課程
         </Link>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="page">
-        <BackLink to="/" label="課程" />
-      <h1>複習 {due.length} 詞</h1>
+    <div className="page">
+      <BackLink to="/course" label="課程" />
+      <p className="kicker">{due.length}</p>
       <QuizSession
         questions={questions}
         speech={progress.settings.speech}
+        wordHits={progress.wordHits}
         onFinished={(results) => {
-          review(scoreWordResults(results))
+          review(
+            scoreWordResults(results),
+            results.flatMap((item) => questionWordIds(item.question)),
+          )
           setScore({
             correct: results.filter((item) => item.correct).length,
             total: results.length,
@@ -62,6 +67,6 @@ export function ReviewPage() {
           setDone(true)
         }}
       />
-    </main>
+    </div>
   )
 }
